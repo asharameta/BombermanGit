@@ -4,6 +4,7 @@ using System.Drawing;
 namespace bomberman
 {
     // lexa lox
+    //anton lox
     enum Sost
     {
         пусто,
