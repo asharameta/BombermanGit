@@ -19,7 +19,7 @@ namespace bomberman
         }
         private void Init()
         {
-            mainboard board = new mainboard(panelGame); 
+            MainBoard board = new MainBoard(panelGame); 
         }
 
         private void formgame_Load(object sender, EventArgs e)

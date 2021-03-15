@@ -9,14 +9,14 @@ namespace bomberman
         стена,
         кирпич
     }
-    class mainboard
+    class MainBoard
     {
         Panel panelGame;
         PictureBox[,] mapPic;
         Sost[,] map; 
         int sizeX = 17;
         int sizeY = 11;
-         public mainboard(Panel panel)
+         public MainBoard(Panel panel)
         {
             panelGame = panel;
 
