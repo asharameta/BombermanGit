@@ -3,6 +3,7 @@ using System.Drawing;
 
 namespace bomberman
 {
+    // lexa lox
     enum Sost
     {
         пусто,
