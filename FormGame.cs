@@ -15,7 +15,7 @@ namespace bomberman
         public FormGame()
         {
             InitializeComponent();
-            Init();
+            Init(); // запуска игрового поля 
         }
         private void Init()
         {
