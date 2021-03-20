@@ -29,3 +29,10 @@ C:\pr_inj\bomberman\BombermanGit\obj\Debug\bomberman.csproj.GenerateResource.cac
 C:\pr_inj\bomberman\BombermanGit\obj\Debug\bomberman.csproj.CoreCompileInputs.cache
 C:\pr_inj\bomberman\BombermanGit\obj\Debug\bomberman.exe
 C:\pr_inj\bomberman\BombermanGit\obj\Debug\bomberman.pdb
+C:\pr_inj\bomberman\BombermanGit\bin\Debug\bomberman.exe.config
+C:\pr_inj\bomberman\BombermanGit\bin\Debug\bomberman.exe.manifest
+C:\pr_inj\bomberman\BombermanGit\bin\Debug\bomberman.application
+C:\pr_inj\bomberman\BombermanGit\bin\Debug\bomberman.exe
+C:\pr_inj\bomberman\BombermanGit\bin\Debug\bomberman.pdb
+C:\pr_inj\bomberman\BombermanGit\obj\Debug\bomberman.exe.manifest
+C:\pr_inj\bomberman\BombermanGit\obj\Debug\bomberman.application
