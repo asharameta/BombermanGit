@@ -22,3 +22,10 @@ F:\kursy\c#\projekt\bomberman\bin\Debug\bomberman.exe.manifest
 F:\kursy\c#\projekt\bomberman\bin\Debug\bomberman.application
 F:\kursy\c#\projekt\bomberman\obj\Debug\bomberman.exe.manifest
 F:\kursy\c#\projekt\bomberman\obj\Debug\bomberman.application
+C:\pr_inj\bomberman\BombermanGit\obj\Debug\bomberman.csprojAssemblyReference.cache
+C:\pr_inj\bomberman\BombermanGit\obj\Debug\bomberman.FormGame.resources
+C:\pr_inj\bomberman\BombermanGit\obj\Debug\bomberman.Properties.Resources.resources
+C:\pr_inj\bomberman\BombermanGit\obj\Debug\bomberman.csproj.GenerateResource.cache
+C:\pr_inj\bomberman\BombermanGit\obj\Debug\bomberman.csproj.CoreCompileInputs.cache
+C:\pr_inj\bomberman\BombermanGit\obj\Debug\bomberman.exe
+C:\pr_inj\bomberman\BombermanGit\obj\Debug\bomberman.pdb

@@ -27,7 +27,7 @@ namespace bomberman
 
         }
 
-        private void aboutGameToolStripMenuItem_Click(object sender, EventArgs e) //описание меню игры 
+        private void обИгреToolStripMenuItem_Click(object sender, EventArgs e) //описание меню игры 
         {
             MessageBox.Show("Gameplay " +
                 "\nMost of the games in the series are made in the genre of arcade maze. " +
@@ -48,7 +48,7 @@ namespace bomberman
                 "there is also a turn-based strategy game", "Game Description");
         }
 
-        private void aboutAuthorToolStripMenuItem_Click(object sender, EventArgs e)//описание меню автора
+        private void обАвтареToolStripMenuItem_Click(object sender, EventArgs e)//описание меню автора
         {
             MessageBox.Show("Anton Pashkevich 09.03.1997, Aliaksei Sharameta 01.08.2002, \n Students of the University of Lodz \n 3rd year student, Computer graphics and Game Programming" +
                 "\nFor feedback, use \nE-mail: natoy7000@gmail.com ", "About Author"); 
