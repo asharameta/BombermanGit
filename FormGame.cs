@@ -27,31 +27,31 @@ namespace bomberman
 
         }
 
-        private void обИгреToolStripMenuItem_Click(object sender, EventArgs e) //описание меню игры 
+        private void aboutGameToolStripMenuItem_Click(object sender, EventArgs e) //описание меню игры 
         {
-            MessageBox.Show("Игровой процесс " +
-                "\nБольшинство игр серии выполнены в жанре аркадного лабиринта." +
-                "Игрок управляет персонажем, находящимся в лабиринте, состоящем" +
-                " из разрушаемых и неразрушаемых стен.Он может оставлять бомбу," +
-                " взрывающуюся через некоторое фиксированное время и разрушающую " +
-                "стены рядом с ней.Специальные бонусы могут увеличить количество" +
-                " одновременно оставляемых бомб, дальность их взрыва, скорость" +
-                " перемещения героя, дать возможность взрыва бомб по нажатию" +
-                " кнопки, невосприимчивость от взрыва бомб, прохождение сквозь" +
-                " разрушаемые стены или сквозь собственные еще невзорванные" +
-                " бомбы.На уровне присутствуют противники.В некоторых играх " +
-                "серии целью игры является нахождение скрытой за одной из" +
-                " разрушаемых стен двери, ведущей в следующий уровень с" +
-                " предварительным уничтожением врагов.Другие игры рассчитаны " +
-                "на многопользовательскую игру на одном экране, целью в них" +
-                " является победа над всеми противниками.Среди игр серии " +
-                "также есть пошаговая стратегия","Описание игры");
+            MessageBox.Show("Gameplay " +
+                "\nMost of the games in the series are made in the genre of arcade maze. " +
+                "The player controls a character located in a maze consisting of" +
+                " from destructible and indestructible walls. He can leave a bomb" +
+                " exploding after a certain fixed time and destroying " +
+                "the walls are next to it. Special bonuses can increase the number of" +
+                " bombs left at the same time the range of their explosion, the speed" +
+                " move the player, give the opportunity to explode bombs by pressing" +
+                " buttons immunity from the explosion of bombs passing through" +
+                " destructible walls or through your own walls that haven't been blown up yet" +
+                " bombs. There are opponents on the level. In some games " +
+                "series the goal of the game is to find the hidden behind one of the" +
+                " destructible walls of the door leading to the next level with" +
+                " preliminary destruction of enemies. Other games are calculated " +
+                "on a single-screen multiplayer game aim at them" +
+                " it is a victory over all opponents. Among the games in the series " +
+                "there is also a turn-based strategy game", "Game Description");
         }
 
-        private void обАвтареToolStripMenuItem_Click(object sender, EventArgs e)//описание меню автора
+        private void aboutAuthorToolStripMenuItem_Click(object sender, EventArgs e)//описание меню автора
         {
-            MessageBox.Show("Анто Пашкевич 09.03.1997 \n Студент Унверситата Лодзь \n Студент 3 курса, Проектирование игр и графический дизайн" +
-                "\nДля связи использовать \nE-mail: natoy7000@gmail.com ","Об Авторе"); 
+            MessageBox.Show("Anton Pashkevich 09.03.1997, Aliaksei Sharameta 01.08.2002, \n Students of the University of Lodz \n 3rd year student, Computer graphics and Game Programming" +
+                "\nFor feedback, use \nE-mail: natoy7000@gmail.com ", "About Author"); 
         }
 
         private void panelgame_Paint(object sender, PaintEventArgs e)
