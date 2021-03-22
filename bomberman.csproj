@@ -84,6 +84,7 @@
       <DependentUpon>FormGame.cs</DependentUpon>
     </Compile>
     <Compile Include="MainBoard.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormGame.resx">
@@ -97,6 +98,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="bomberman_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
@@ -114,6 +116,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icons-Land-Multiple-Smiley-Bomb-Cool.ico" />
+    <None Include="sprite\brick.png" />
+    <None Include="sprite\grass.png" />
+    <None Include="sprite\wall.png" />
+    <None Include="sprite\bomb.png" />
+    <None Include="sprite\enemy.png" />
+    <None Include="sprite\enemy2.png" />
+    <None Include="sprite\fire.png" />
+    <None Include="sprite\player.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

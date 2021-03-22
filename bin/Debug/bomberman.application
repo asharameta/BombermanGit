@@ -7,14 +7,14 @@
     <framework targetVersion="4.7.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="bomberman.exe.manifest" size="4001">
+    <dependentAssembly dependencyType="install" codebase="bomberman.exe.manifest" size="4183">
       <assemblyIdentity name="bomberman.exe" version="1.0.0.2" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>IRyzLuLfZEj8OoPE2FHSRChGLxmKu4z7psoPhdqtruc=</dsig:DigestValue>
+        <dsig:DigestValue>RrQhnkAWMp6M97bkbWx5AqxDEggsvb+rO2qiXnmi3Co=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
