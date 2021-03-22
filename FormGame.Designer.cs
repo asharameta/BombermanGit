@@ -69,13 +69,13 @@
             // 
             this.новаяИграToolStripMenuItem.Name = "новаяИграToolStripMenuItem";
             this.новаяИграToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.новаяИграToolStripMenuItem.Text = "Новая игра";
+            this.новаяИграToolStripMenuItem.Text = "New Game";
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
             this.выходToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.выходToolStripMenuItem.Text = "Выход";
+            this.выходToolStripMenuItem.Text = "Exit";
             // 
             // справкаToolStripMenuItem
             // 
@@ -106,10 +106,10 @@
             this.panelGame.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelGame.Location = new System.Drawing.Point(0, 44);
+            this.panelGame.Location = new System.Drawing.Point(29, 58);
             this.panelGame.Margin = new System.Windows.Forms.Padding(2);
             this.panelGame.Name = "panelGame";
-            this.panelGame.Size = new System.Drawing.Size(906, 598);
+            this.panelGame.Size = new System.Drawing.Size(877, 576);
             this.panelGame.TabIndex = 1;
             this.panelGame.Paint += new System.Windows.Forms.PaintEventHandler(this.panelgame_Paint);
             // 
@@ -130,7 +130,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(906, 641);
+            this.ClientSize = new System.Drawing.Size(906, 633);
             this.Controls.Add(this.labelScore);
             this.Controls.Add(this.panelGame);
             this.Controls.Add(this.menuStrip);
