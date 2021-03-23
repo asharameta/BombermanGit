@@ -68,13 +68,13 @@
             // новаяИграToolStripMenuItem
             // 
             this.новаяИграToolStripMenuItem.Name = "новаяИграToolStripMenuItem";
-            this.новаяИграToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.новаяИграToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.новаяИграToolStripMenuItem.Text = "New Game";
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.выходToolStripMenuItem.Text = "Exit";
             // 
             // справкаToolStripMenuItem
@@ -90,14 +90,14 @@
             // обИгреToolStripMenuItem
             // 
             this.обИгреToolStripMenuItem.Name = "обИгреToolStripMenuItem";
-            this.обИгреToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.обИгреToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.обИгреToolStripMenuItem.Text = "About Game";
             this.обИгреToolStripMenuItem.Click += new System.EventHandler(this.обИгреToolStripMenuItem_Click);
             // 
             // обАвтареToolStripMenuItem
             // 
             this.обАвтареToolStripMenuItem.Name = "обАвтареToolStripMenuItem";
-            this.обАвтареToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.обАвтареToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.обАвтареToolStripMenuItem.Text = "About Author";
             this.обАвтареToolStripMenuItem.Click += new System.EventHandler(this.обАвтареToolStripMenuItem_Click);
             // 
@@ -106,10 +106,11 @@
             this.panelGame.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelGame.Location = new System.Drawing.Point(29, 58);
+            this.panelGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panelGame.Location = new System.Drawing.Point(32, 73);
             this.panelGame.Margin = new System.Windows.Forms.Padding(2);
             this.panelGame.Name = "panelGame";
-            this.panelGame.Size = new System.Drawing.Size(877, 576);
+            this.panelGame.Size = new System.Drawing.Size(852, 552);
             this.panelGame.TabIndex = 1;
             this.panelGame.Paint += new System.Windows.Forms.PaintEventHandler(this.panelgame_Paint);
             // 
@@ -130,7 +131,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(906, 633);
+            this.ClientSize = new System.Drawing.Size(906, 636);
             this.Controls.Add(this.labelScore);
             this.Controls.Add(this.panelGame);
             this.Controls.Add(this.menuStrip);

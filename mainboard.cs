@@ -30,7 +30,7 @@ namespace bomberman   // локация
                 boxSize = panelGame.Width / sizeX;
             else
                 boxSize = panelGame.Height / sizeY;
-            InitStartMap(boxSize);  //создание карты 
+            InitStartMap(boxSize+1);  //создание карты 
             InitStartPlayer(boxSize);  // создание игрока
         }
 
