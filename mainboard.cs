@@ -96,8 +96,7 @@ namespace bomberman   // локация
                     mapPic[point.X, point.Y].Image = Properties.Resources.fire;
                     break;
                 case Sost.приз:
-                    mapPic[point.X, point.Y].Image = Properties.Resources.grass;
-                    //       mapPic[point.X, point.Y].Image = Properties.Resources.prize;   // добавить потом 
+                        mapPic[point.X, point.Y].Image = Properties.Resources.prize;  
                     break;
                 default:
                     mapPic[point.X, point.Y].Image = Properties.Resources.grass;
@@ -118,7 +117,13 @@ namespace bomberman   // локация
             picture.SizeMode = PictureBoxSizeMode.StretchImage; // задний фон растянуло на всю клеточку 
             panelGame.Controls.Add(picture); // добавление картинку на контролс
             picture.BringToFront(); // выджвижение игрока на передний фон 
-            player = new Player(picture);  // присвоили картинку игрока к игроку (классу) 
+            player = new Player(picture,mapPic);  // присвоили картинку игрока к игроку (классу) 
+        }
+
+        public void MovePlayer(Arrows arrow) // движение игрока
+        {
+            if (player == null) return; // страховка, если игрока нету и нажали движение 
+            player.MovePlayer(arrow);// передаем движение игроку 
         }
     }
 }

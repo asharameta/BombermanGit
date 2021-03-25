@@ -12,6 +12,8 @@ namespace bomberman
 {
     public partial class FormGame : Form
     {
+        MainBoard board;
+
         public FormGame()
         {
             InitializeComponent();
@@ -19,7 +21,7 @@ namespace bomberman
         }
         private void Init()
         {
-            MainBoard board = new MainBoard(panelGame); 
+            board = new MainBoard(panelGame);  //создание карты панели 
         }
 
         private void formgame_Load(object sender, EventArgs e)
@@ -72,6 +74,27 @@ namespace bomberman
         private void справкаToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void FormGame_KeyDown(object sender, KeyEventArgs e) // при нажатие клавиатуры (форма, клавиша) 
+        {
+            switch (e.KeyCode) // нажатие клавиши(движение игрока) 
+            {
+                  // управление стрелочками (вчитывает символ, и в майнборд, передает значение) 
+                case Keys.Left: board.MovePlayer(Arrows.left); break;
+                case Keys.Right: board.MovePlayer(Arrows.right); break;
+                case Keys.Up: board.MovePlayer(Arrows.up); break;
+                case Keys.Down: board.MovePlayer(Arrows.down); break;
+                    //управление буквами
+                case Keys.A: board.MovePlayer(Arrows.left); break;
+                case Keys.D: board.MovePlayer(Arrows.right); break;
+                case Keys.W: board.MovePlayer(Arrows.up); break;
+                case Keys.S: board.MovePlayer(Arrows.down); break;
+
+            }
+                    
+                    
+      
         }
     }
 }
