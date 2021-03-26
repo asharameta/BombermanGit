@@ -108,7 +108,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(130)))), ((int)(((byte)(133)))));
             this.panelGame.Location = new System.Drawing.Point(32, 73);
-            this.panelGame.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelGame.Margin = new System.Windows.Forms.Padding(2);
             this.panelGame.Name = "panelGame";
             this.panelGame.Size = new System.Drawing.Size(835, 539);
             this.panelGame.TabIndex = 1;
@@ -138,7 +138,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormGame";
