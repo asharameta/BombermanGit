@@ -19,11 +19,13 @@ namespace bomberman
     {
         PictureBox player;
         PictureBox[,] mapPic;  // для нахождение игрока по боксам картинак 
+        Sost[,] map; // состояние карты что бы враг не ходил на блоки 
         int step = 5; // длина шага
-        public Player(PictureBox _player, PictureBox[,]_mapPic)
+        public Player(PictureBox _player, PictureBox[,]_mapPic, Sost[,] _map)
         {
             player = _player;
             mapPic = _mapPic;
+            map = _map;
         }
 
         public void MovePlayer(Arrows arrow) // движение игрока 
@@ -48,7 +50,46 @@ namespace bomberman
         }
         private void Move(int sx, int sy) // изменение расположение картинки для движение 
         {
+            if(isEmpty(ref sx,ref sy))//проверяем пустая ли клетка следующая для хода 
             player.Location = new Point(player.Location.X +sx, player.Location.Y +sy);
+        }
+
+        private bool isEmpty(ref int sx,ref int sy) // пустота на карте можно идти , ref дает права для изменение переменных 
+        {
+            Point playerPoint = MyNowPoint(); // месположение игрока
+            // проверяем пустая клетка и можно ли туда идти 
+            if(sx > 0 && map[playerPoint.X+1,playerPoint.Y] == Sost.пусто)
+            return true;
+            if (sx < 0 && map[playerPoint.X - 1, playerPoint.Y] == Sost.пусто)
+                return true;
+            if (sy > 0 && map[playerPoint.X , playerPoint.Y + 1 ] == Sost.пусто)
+                return true;
+            if (sy < 0 && map[playerPoint.X , playerPoint.Y - 1] == Sost.пусто)
+                return true;
+
+            //расположение игрока
+            int playerRight = player.Location.X + player.Size.Width;
+            int playerLeft = player.Location.X;
+            int playerDown = player.Location.Y + player.Size.Height;
+            int playerUp = player.Location.Y;
+
+            // расположение боксов и их сторон 
+            // расположение бокса правого. его левой стенки 
+            int rightWallLeft = mapPic[playerPoint.X + 1, playerPoint.Y].Location.X;
+            int leftWallRight = mapPic[playerPoint.X - 1, playerPoint.Y].Location.X + mapPic[playerPoint.X - 1, playerPoint.Y].Size.Width; 
+            int downWallUp = mapPic[playerPoint.X , playerPoint.Y + 1].Location.Y;
+            int upWallDown = mapPic[playerPoint.X , playerPoint.Y -1].Location.Y + mapPic[playerPoint.X , playerPoint.Y - 1].Size.Height;
+
+            if (sx > 0 && playerRight + sx > rightWallLeft)
+                sx = rightWallLeft - playerRight;
+            if (sx < 0 && playerLeft + sx < leftWallRight)
+                sx = leftWallRight - playerLeft;
+            if (sy > 0 && playerDown + sy > downWallUp)
+                sy = downWallUp - playerDown;
+            if (sy < 0 && playerUp + sy < upWallDown)
+                sy = upWallDown - playerUp; 
+
+            return true;
         }
         private Point MyNowPoint() // расположение игрока 
         {

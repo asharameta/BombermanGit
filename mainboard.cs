@@ -117,7 +117,7 @@ namespace bomberman   // локация
             picture.SizeMode = PictureBoxSizeMode.StretchImage; // задний фон растянуло на всю клеточку 
             panelGame.Controls.Add(picture); // добавление картинку на контролс
             picture.BringToFront(); // выджвижение игрока на передний фон 
-            player = new Player(picture,mapPic);  // присвоили картинку игрока к игроку (классу) 
+            player = new Player(picture,mapPic,map);  // присвоили картинку игрока к игроку (классу) 
         }
 
         public void MovePlayer(Arrows arrow) // движение игрока
