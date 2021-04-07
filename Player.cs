@@ -54,18 +54,9 @@ namespace bomberman
             player.Location = new Point(player.Location.X +sx, player.Location.Y +sy);
         }
 
-        private bool isEmpty(ref int sx,ref int sy) // пустота на карте можно идти , ref дает права для изменение переменных 
+        private bool isEmpty(ref int sx, ref int sy) // пустота на карте можно идти , ref дает права для изменение переменных 
         {
             Point playerPoint = MyNowPoint(); // месположение игрока
-            // проверяем пустая клетка и можно ли туда идти 
-            if(sx > 0 && map[playerPoint.X+1,playerPoint.Y] == Sost.пусто)
-            return true;
-            if (sx < 0 && map[playerPoint.X - 1, playerPoint.Y] == Sost.пусто)
-                return true;
-            if (sy > 0 && map[playerPoint.X , playerPoint.Y + 1 ] == Sost.пусто)
-                return true;
-            if (sy < 0 && map[playerPoint.X , playerPoint.Y - 1] == Sost.пусто)
-                return true;
 
             //расположение игрока
             int playerRight = player.Location.X + player.Size.Width;
@@ -76,9 +67,54 @@ namespace bomberman
             // расположение боксов и их сторон 
             // расположение бокса правого. его левой стенки 
             int rightWallLeft = mapPic[playerPoint.X + 1, playerPoint.Y].Location.X;
-            int leftWallRight = mapPic[playerPoint.X - 1, playerPoint.Y].Location.X + mapPic[playerPoint.X - 1, playerPoint.Y].Size.Width; 
-            int downWallUp = mapPic[playerPoint.X , playerPoint.Y + 1].Location.Y;
-            int upWallDown = mapPic[playerPoint.X , playerPoint.Y -1].Location.Y + mapPic[playerPoint.X , playerPoint.Y - 1].Size.Height;
+            int leftWallRight = mapPic[playerPoint.X - 1, playerPoint.Y].Location.X + mapPic[playerPoint.X - 1, playerPoint.Y].Size.Width;
+            int downWallUp = mapPic[playerPoint.X, playerPoint.Y + 1].Location.Y;
+            int upWallDown = mapPic[playerPoint.X, playerPoint.Y - 1].Location.Y + mapPic[playerPoint.X, playerPoint.Y - 1].Size.Height;
+
+            // расположение угловых боксов 
+            int rightUpWallDown = mapPic[playerPoint.X + 1, playerPoint.Y - 1].Location.Y + mapPic[playerPoint.X + 1, playerPoint.Y - 1].Size.Height;
+            int rightDownWallUp = mapPic[playerPoint.X + 1, playerPoint.Y + 1].Location.Y;
+            int leftUpWallDown = mapPic[playerPoint.X - 1, playerPoint.Y - 1].Location.Y+ mapPic[playerPoint.X - 1, playerPoint.Y - 1].Size.Height;
+            int leftDownWallUp = mapPic[playerPoint.X - 1, playerPoint.Y + 1].Location.Y;
+
+            int rightUpWallLeft = mapPic[playerPoint.X + 1, playerPoint.Y - 1].Location.X; 
+            int leftUpWallRight = mapPic[playerPoint.X - 1, playerPoint.Y - 1].Location.X + mapPic[playerPoint.X - 1, playerPoint.Y - 1].Size.Width; 
+            int rightDownWallLeft = mapPic[playerPoint.X + 1, playerPoint.Y + 1].Location.X;
+            int leftDownWallRight = mapPic[playerPoint.X - 1, playerPoint.Y + 1].Location.X + mapPic[playerPoint.X -1, playerPoint.Y + 1].Size.Width ;
+            // проверяем пустая клетка и можно ли туда идти . еще меняем параметры х и у что бы не проходить рядом боксов
+            if (sx > 0 && map[playerPoint.X + 1, playerPoint.Y] == Sost.пусто)
+            {
+                if (playerUp < rightUpWallDown)
+                    sy = rightUpWallDown - playerUp;
+                if (playerDown > rightDownWallUp)
+                    sy = rightDownWallUp - playerDown; 
+                return true;
+            }
+            if (sx < 0 && map[playerPoint.X - 1, playerPoint.Y] == Sost.пусто)
+            {
+                if (playerUp < leftUpWallDown)
+                    sy = leftUpWallDown - playerUp;
+                if (playerDown > leftDownWallUp)
+                    sy = leftDownWallUp - playerDown;
+                return true;
+            }
+            if (sy > 0 && map[playerPoint.X, playerPoint.Y + 1] == Sost.пусто)
+            {
+                if (playerRight > rightDownWallLeft)
+                    sx = rightDownWallLeft - playerRight;
+                if (playerLeft < leftDownWallRight)
+                    sx = leftDownWallRight - playerLeft; 
+                return true;
+            }
+            if (sy < 0 && map[playerPoint.X, playerPoint.Y - 1] == Sost.пусто)
+            {
+                if (playerRight > rightUpWallLeft)
+                    sx = rightUpWallLeft - playerRight;
+                if (playerLeft < leftUpWallRight)
+                    sx = leftUpWallRight - playerLeft; 
+                return true;
+            }
+
 
             if (sx > 0 && playerRight + sx > rightWallLeft)
                 sx = rightWallLeft - playerRight;
