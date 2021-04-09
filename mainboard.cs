@@ -22,6 +22,7 @@ namespace bomberman   // локация
         int sizeY = 11;     // высота игрового поля 
         static Random rand = new Random(); // рандом для создание блоков которые можно будет рушить 
         Player player; // наш игрок
+        Mob mob; // противник(моб, враг)
          public MainBoard(Panel panel) // конструктор 
         {
             panelGame = panel; // присвоение понели 
@@ -32,6 +33,7 @@ namespace bomberman   // локация
                 boxSize = panelGame.Height / sizeY;
             InitStartMap(boxSize+1);  //создание карты 
             InitStartPlayer(boxSize);  // создание игрока
+            InitMob(boxSize);
         }
 
         private void InitStartMap(int boxSize)
@@ -118,6 +120,20 @@ namespace bomberman   // локация
             panelGame.Controls.Add(picture); // добавление картинку на контролс
             picture.BringToFront(); // выджвижение игрока на передний фон 
             player = new Player(picture,mapPic,map);  // присвоили картинку игрока к игроку (классу) 
+        }
+        private void InitMob(int boxSize) // создание моба 
+        {
+            int x = sizeX - 2, y = sizeY - 2;  // кординаты создание моба
+            PictureBox picture = new PictureBox(); //кортинка моба
+            picture.Location = new Point(x * (boxSize) + 7, y * (boxSize) + 3); // местоположение игрока  (по середине)
+            picture.Size = new Size(boxSize - 14, boxSize - 5); // размер mob             (можно редактировать)
+            picture.Image = Properties.Resources.enemy; // присвоение картинки mob
+            picture.BackgroundImage = Properties.Resources.grass;  // задний фон mob 
+            picture.BackgroundImageLayout = ImageLayout.Stretch;  // задний фон растянуло на всю клеточку 
+            picture.SizeMode = PictureBoxSizeMode.StretchImage; // задний фон растянуло на всю клеточку 
+            panelGame.Controls.Add(picture); // добавление картинку на контролс
+            picture.BringToFront(); // выджвижение mob на передний фон 
+            mob = new Mob(picture, mapPic, map);
         }
 
         public void MovePlayer(Arrows arrow) // движение игрока
