@@ -5,10 +5,10 @@ namespace bomberman
 {
     class MovingClass
     {
-        PictureBox player;
-        PictureBox[,] mapPic;
-        Sost[,] map;
-        public MovingClass(PictureBox item, PictureBox[,] _mapPic, Sost[,] _map)
+        PictureBox player; //игрок (картинка)
+        PictureBox[,] mapPic; // карта
+        Sost[,] map; // состояние карта 
+        public MovingClass(PictureBox item, PictureBox[,] _mapPic, Sost[,] _map) // конструктор. передаем параметры 
         {
             player = item;
             mapPic = _mapPic;

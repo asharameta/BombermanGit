@@ -21,18 +21,16 @@ namespace bomberman
         PictureBox[,] mapPic;  // для нахождение игрока по боксам картинак 
         Sost[,] map; // состояние карты что бы враг не ходил на блоки 
         int step = 5; // длина шага
-        MovingClass moving;
-        public Player(PictureBox _player, PictureBox[,]_mapPic, Sost[,] _map)
+        MovingClass moving; // класс для движение игрока, содержит функций движение игрока
+        public Player(PictureBox _player, PictureBox[,]_mapPic, Sost[,] _map) // конструктор 
         {
             player = _player;
-            mapPic = _mapPic;
-            map = _map;
-            moving = new MovingClass(_player,_mapPic,_map);
+            moving = new MovingClass(_player,_mapPic,_map); // создали движение игрока 
         }
 
         public void MovePlayer(Arrows arrow) // движение игрока 
         {
-           switch(arrow) // передвижение игрока (картинки его) 
+           switch(arrow) // передвижение игрока (картинки его) спомощью функиця мув из класса МувингКласс
             {
                 case Arrows.left:
                     moving.Move(-step,0);        
