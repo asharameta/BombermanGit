@@ -33,7 +33,11 @@ namespace bomberman   // локация
                 boxSize = panelGame.Height / sizeY;
             InitStartMap(boxSize+1);  //создание карты 
             InitStartPlayer(boxSize);  // создание игрока
-            InitMob(boxSize);
+            for (int i = 0; i < 3; i++)
+            {
+                InitMob(boxSize); //создание моба
+            }
+
         }
 
         private void InitStartMap(int boxSize)
@@ -124,9 +128,10 @@ namespace bomberman   // локация
         private void InitMob(int boxSize) // создание моба 
         {
             int x = sizeX - 2, y = sizeY - 2;  // кординаты создание моба
+            FindEmptyPlace(out x, out y);
             PictureBox picture = new PictureBox(); //кортинка моба
             picture.Location = new Point(x * (boxSize) + 7, y * (boxSize) + 3); // местоположение игрока  (по середине)
-            picture.Size = new Size(boxSize - 14, boxSize - 5); // размер mob             (можно редактировать)
+            picture.Size = new Size(boxSize - 11, boxSize - 5); // размер mob             (можно редактировать)
             picture.Image = Properties.Resources.enemy; // присвоение картинки mob
             picture.BackgroundImage = Properties.Resources.grass;  // задний фон mob 
             picture.BackgroundImageLayout = ImageLayout.Stretch;  // задний фон растянуло на всю клеточку 
@@ -135,11 +140,25 @@ namespace bomberman   // локация
             picture.BringToFront(); // выджвижение mob на передний фон 
             mob = new Mob(picture, mapPic, map);
         }
+        private void FindEmptyPlace(out int x, out int y)
+        {
+            int loop = 0;
+            do
+            {
+                x = rand.Next(map.GetLength(0)/2, map.GetLength(0));
+                y = rand.Next(1, map.GetLength(1));
+            } while (map[x,y]!=Sost.пусто&&loop++<100);
+        }
 
         public void MovePlayer(Arrows arrow) // движение игрока
         {
             if (player == null) return; // страховка, если игрока нету и нажали движение 
             player.MovePlayer(arrow);// передаем движение игроку 
+        }
+
+        public void PutBomb()
+        {
+            ChangeSost(player.MyNowPoint(), Sost.бомба);
         }
     }
 }

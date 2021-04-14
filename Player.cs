@@ -48,6 +48,10 @@ namespace bomberman
                     break; 
             }
         }
+        public Point MyNowPoint()
+        {
+            return moving.MyNowPoint();
+        }
        
     }
 }

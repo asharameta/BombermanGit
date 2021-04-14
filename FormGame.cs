@@ -90,6 +90,7 @@ namespace bomberman
                 case Keys.D: board.MovePlayer(Arrows.right); break;
                 case Keys.W: board.MovePlayer(Arrows.up); break;
                 case Keys.S: board.MovePlayer(Arrows.down); break;
+                case Keys.Space: board.PutBomb();break;
 
             }
                     
