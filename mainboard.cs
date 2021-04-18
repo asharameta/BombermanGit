@@ -4,6 +4,7 @@ using System;
 
 namespace bomberman   // локация 
 {
+    public delegate void deBlow();
     enum Sost    // перечисление состояний на поле 
     {
         пусто,
@@ -158,7 +159,10 @@ namespace bomberman   // локация
 
         public void PutBomb()
         {
-            ChangeSost(player.MyNowPoint(), Sost.бомба);
+            Point playerPoint = player.MyNowPoint();
+            if (map[playerPoint.X, playerPoint.Y] == Sost.бомба) return;
+            if (player.PutBomb(mapPic))
+                ChangeSost(player.MyNowPoint(), Sost.бомба);
         }
     }
 }

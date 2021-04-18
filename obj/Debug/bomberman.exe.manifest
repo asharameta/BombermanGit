@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="bomberman.exe" size="903136">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="bomberman.exe" size="904160">
       <assemblyIdentity name="bomberman" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>eX7BsK2SZRfrNJqNkhyHjXOqYMsMpqWrNUBZqdn+WTo=</dsig:DigestValue>
+        <dsig:DigestValue>kRn3gbNE+X+K2z5jYH4yecpQsOa1dEmLAM0GJUvGeqU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
