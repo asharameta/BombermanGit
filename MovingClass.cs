@@ -49,7 +49,7 @@ namespace bomberman
             int leftDownWallRight = mapPic[playerPoint.X - 1, playerPoint.Y + 1].Location.X + mapPic[playerPoint.X - 1, playerPoint.Y + 1].Size.Width;
             // проверяем пустая клетка и можно ли туда идти . еще меняем параметры х и у что бы не проходить рядом боксов
 
-            int offset = 20; // для плавного перемещение. смещение игрока
+            int offset = 10; // для плавного перемещение. смещение игрока
 
             if (sx > 0 && map[playerPoint.X + 1, playerPoint.Y] == Sost.пусто)
             {

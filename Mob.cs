@@ -8,6 +8,11 @@ using System.Windows.Forms;
 
 namespace bomberman
 {
+    /// <summary>
+    /// 1. уровень сложности - выберает доступную точку и бежит к ней 
+    /// 2. уровень сложности - выберает доступную точку и бежит к ней, если видит бомку - убегает
+    /// 3. уровень сложности - бегает от точки к точку, если доступен человек бежит к нему, если встретил бомбу убегает
+    /// </summary>
     class Mob
     {
         PictureBox mob; // создание картинки моба 
@@ -15,23 +20,22 @@ namespace bomberman
         Point destinePlace; // поинт точка до которой двигается моб 
         Point MobPlace;  // поинт что бы добрался враг 
         MovingClass moving; // класс движение 
-        int step=3; // шаг врага
-        Sost[,] map;
-        int[,] fmap;
-        int paths;
-        Point[] path;
-        int pathStep;
-        static Random rand = new Random();
+        int step=5; // шаг врага
+        Sost[,] map; // состоянние карты
+        int[,] fmap; //заполняеться числами что бы враг знал куда идти  
+        int paths;// длина пути 
+        Point[] path;// путь 
+        int pathStep; // текущий шаг 
+        static Random rand = new Random(); // рандомное значение для нового пути куда должен идти
         public Mob(PictureBox picture, PictureBox[,] picM, Sost[,] _map) // конструктор 
         {
-            mob = picture;
-            map = _map;
-            fmap = new int[map.GetLength(0), map.GetLength(1)];
-            path = new Point[map.GetLength(0)* map.GetLength(1)];
+            mob = picture;// картинка врага
+            map = _map; // карта
+            fmap = new int[map.GetLength(0), map.GetLength(1)]; // длина карты
+            path = new Point[map.GetLength(0)* map.GetLength(1)]; //максимальный путь
             moving = new MovingClass(picture, picM, _map); // класс движение 
             MobPlace = moving.MyNowPoint(); // получаем поинты врага 
-            this.mob = picture;
-            destinePlace = MobPlace; // кардинаты движение моба 
+            destinePlace = MobPlace; // кардинаты движение моба , куда должен идти моб
             CreateTimer(); // запуск таймера для движение игрока 
             timer.Enabled = true;  // вкл таймера 
         }
@@ -39,17 +43,17 @@ namespace bomberman
         private void CreateTimer() // создание таймера для движение врага 
         {
             timer = new Timer(); // создание таймера
-            timer.Interval = 100; // 1 с . через заданное время двигается врак  
+            timer.Interval = 50; // х с . через заданное время двигается враг                           скорость игрока
             timer.Tick += Timer_Tick; // счетчик 
         }
 
         private void Timer_Tick(object sender, EventArgs e) // движене врага 
         {
-            if (MobPlace == destinePlace) GetNewPlace(); // дошел до точки которая указан 
-            if (path[0].X == 0 & path[0].Y == 0)
-                if (!FindPath()) return;
-            if (pathStep > paths) return;
-            if (path[pathStep] == MobPlace)
+            if (MobPlace == destinePlace) GetNewPlace(); // дошел до точки которая указан , новый маршрут строим
+            if (path[0].X == 0 && path[0].Y == 0) // если такого пути нету 
+                if (!FindPath()) return; // нету пути
+            if (pathStep > paths) return; // дошли до пути 
+            if (path[pathStep] == MobPlace) // дошли до пути двигаем шаг слудующий 
                 pathStep++;
             else
                 MoveMob(path[pathStep]); // движение до указаной точки 
@@ -61,31 +65,32 @@ namespace bomberman
                 sx = newPlace.X - MobPlace.X > step ? step : newPlace.X - MobPlace.X;
             else
                 sx = MobPlace.X - newPlace.X < step ? newPlace.X - MobPlace.X : -step;
-            if (MobPlace.Y < newPlace.Y) 
+            if (MobPlace.Y < newPlace.Y)
                 sy = newPlace.Y - MobPlace.Y > step ? step : newPlace.Y - MobPlace.Y;
             else
                 sy = MobPlace.Y - newPlace.Y < step ? newPlace.Y - MobPlace.Y : -step;
-            moving.Move(sx, sy);
+            moving.Move(sx*step, sy*step);
 
             MobPlace = moving.MyNowPoint();
 
         }
 
-        private bool FindPath()
+        // суть пойска пути, заполняем карту 0 и выстраеваем путь изменяе 0 nr++; пока не найдем наш путь 
+        private bool FindPath() // поиск пути врага 
         {
-            for (int x = 0; x < map.GetLength(0); x++)
+            for (int x = 0; x < map.GetLength(0); x++) // получаем длинну карты X,Y для пойска маршрута 
                 for(int y=0;y<map.GetLength(1);y++)
                     fmap[x, y] = 0;
             bool added;
-            bool found = false;
-            fmap[MobPlace.X, MobPlace.Y] = 1;
-            int nr = 1;
+            bool found = false; // найден ли наш путь
+            fmap[MobPlace.X, MobPlace.Y] = 1; // первый путь врага с 1 
+            int nr = 1; // путь врага будет рассти куда идти 
             do
             {
                 added = false;
-                for (int x = 0; x < map.GetLength(0); x++)
+                for (int x = 0; x < map.GetLength(0); x++) // перебор карты 
                     for (int y = 0; y < map.GetLength(1); y++)
-                        if(fmap[x,y]==nr)
+                        if(fmap[x,y]==nr) // споимали наш номер. увеличиваем значение 
                         {
                             MarkPath(x + 1, y, nr + 1);
                             MarkPath(x - 1, y, nr + 1);
@@ -93,17 +98,18 @@ namespace bomberman
                             MarkPath(x, y + 1, nr + 1);
                             added = true;
                         }
-                if(fmap[destinePlace.X, destinePlace.Y]>0)
+                if(fmap[destinePlace.X, destinePlace.Y]>0) // дошли до конца 
                 {
                     found = true;
                     break;
                 }
                 nr++;
-            } while (added);
-            if (!found) return false;
-            int sx = destinePlace.X;
-            int sy = destinePlace.Y;
-            paths = nr;
+            } while (added); 
+            if (!found) return false; // не нашли путь 
+            // нашли путь обознаем его
+            int sx = destinePlace.X; // длина х 
+            int sy = destinePlace.Y; // длина 
+            paths = nr; // длина пути 
             while(nr>=0)
             {
                 path[nr].X = sx;
@@ -117,29 +123,29 @@ namespace bomberman
             pathStep = 0;
             return true;
         }
-        private void MarkPath(int x, int y, int n)
+        private void MarkPath(int x, int y, int n) // можно идти или нет 
         {
-            if (x < 0 || x >= map.GetLength(0)) return;
+            if (x < 0 || x >= map.GetLength(0)) return; // если значение ушло за карту 
             if (y < 0 || y >= map.GetLength(1)) return;
-            if (fmap[x, y] > 0) return;
-            if (map[x, y] != Sost.пусто) return;
-            fmap[x, y] = n;
+            if (fmap[x, y] > 0) return; // что бы не ходил встороны и по проиденному пути 1,2,3,4 и т.д а нет 1,1,1,1,1 
+            if (map[x, y] != Sost.пусто) return;  // если не пусто выходим 
+            fmap[x, y] = n; //отмечаем что можно идти дальше 
         }
         private bool IsPath(int x, int y, int n)
         {
-            if (x < 0 || x >= map.GetLength(0)) return false;
+            if (x < 0 || x >= map.GetLength(0)) return false; // ушел за карту, на всякий случий 
             if (y < 0 || y >= map.GetLength(1)) return false;
             return fmap[x,y]==n;
         }
-        private void GetNewPlace()
+        private void GetNewPlace() // создание нового пути, маршрута, к
         {
             int loop = 0;
             do
-            {
+            {   // рандомные значение куда должен идти враг 
                 destinePlace.X = rand.Next(1, map.GetLength(0) - 1);
                 destinePlace.Y = rand.Next(1, map.GetLength(1) - 1);
-            } while (!FindPath() && loop++<100);
-            if (loop >= 100) destinePlace = MobPlace;
+            } while (!FindPath() && loop++<300); // наден путь или нет, и второе страховка шоб выйти из цикла
+            if (loop >= 300) destinePlace = MobPlace; // якобы нашел путь .... 
         }
     }
 }

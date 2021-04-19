@@ -4,7 +4,7 @@ using System;
 
 namespace bomberman   // локация 
 {
-    public delegate void deBlow();
+    public delegate void deBlow(); // метод взрыва 
     enum Sost    // перечисление состояний на поле 
     {
         пусто,
@@ -34,7 +34,7 @@ namespace bomberman   // локация
                 boxSize = panelGame.Height / sizeY;
             InitStartMap(boxSize+1);  //создание карты 
             InitStartPlayer(boxSize);  // создание игрока
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++) // создание количество мобов 
             {
                 InitMob(boxSize); //создание моба
             }
@@ -129,7 +129,7 @@ namespace bomberman   // локация
         private void InitMob(int boxSize) // создание моба 
         {
             int x = sizeX - 2, y = sizeY - 2;  // кординаты создание моба
-            FindEmptyPlace(out x, out y);
+            FindEmptyPlace(out x, out y); // ищет свободное место для создание моба 
             PictureBox picture = new PictureBox(); //кортинка моба
             picture.Location = new Point(x * (boxSize) + 7, y * (boxSize) + 3); // местоположение игрока  (по середине)
             picture.Size = new Size(boxSize - 11, boxSize - 5); // размер mob             (можно редактировать)
@@ -141,12 +141,12 @@ namespace bomberman   // локация
             picture.BringToFront(); // выджвижение mob на передний фон 
             mob = new Mob(picture, mapPic, map);
         }
-        private void FindEmptyPlace(out int x, out int y)
+        private void FindEmptyPlace(out int x, out int y) // ищет пустое место для создание моба 
         {
-            int loop = 0;
+            int loop = 0; // выйти из цикла, если нету пустого места (страховка) 
             do
             {
-                x = rand.Next(map.GetLength(0)/2, map.GetLength(0));
+                x = rand.Next(map.GetLength(0)/2, map.GetLength(0)); // рандомное число с половины поля, что бы не появлялись около врага 
                 y = rand.Next(1, map.GetLength(1));
             } while (map[x,y]!=Sost.пусто&&loop++<100);
         }
@@ -157,12 +157,12 @@ namespace bomberman   // локация
             player.MovePlayer(arrow);// передаем движение игроку 
         }
 
-        public void PutBomb()
+        public void PutBomb() // установка бомбы 
         {
-            Point playerPoint = player.MyNowPoint();
-            if (map[playerPoint.X, playerPoint.Y] == Sost.бомба) return;
-            if (player.PutBomb(mapPic))
-                ChangeSost(player.MyNowPoint(), Sost.бомба);
+            Point playerPoint = player.MyNowPoint(); // расположение игрока
+            if (map[playerPoint.X, playerPoint.Y] == Sost.бомба) return; // нельзя ставить 2 бомбы на одном месте 
+            if (player.PutBomb(mapPic)) // проверка можно ли бомбу ставить 
+                ChangeSost(player.MyNowPoint(), Sost.бомба); // установка самой бомбы на позиций игрока 
         }
     }
 }

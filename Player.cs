@@ -22,8 +22,8 @@ namespace bomberman
         Sost[,] map; // состояние карты что бы враг не ходил на блоки 
         int step; // длина шага
         MovingClass moving; // класс для движение игрока, содержит функций движение игрока
-        List<Bomb> bombs;
-        int NumOfBomb;
+        List<Bomb> bombs; // массив бомб
+        int NumOfBomb; // количество бомб
         public Player(PictureBox _player, PictureBox[,]_mapPic, Sost[,] _map) // конструктор 
         {
             player = _player;
@@ -53,15 +53,15 @@ namespace bomberman
                     break; 
             }
         }
-        public Point MyNowPoint()
+        public Point MyNowPoint() // позиция игрока, из класса мовинг 
         {
             return moving.MyNowPoint();
         }
-        public bool PutBomb(PictureBox[,] mapPic)
+        public bool PutBomb(PictureBox[,] mapPic)// можно ли ставить бомбу или нет 
         {
-            if (bombs.Count() >= NumOfBomb) return false;
-            Bomb bomb = new Bomb(mapPic, MyNowPoint());
-            bombs.Add(bomb);
+            if (bombs.Count() >= NumOfBomb) return false; // нету бомб
+            Bomb bomb = new Bomb(mapPic, MyNowPoint()); // создание бомбы 
+            bombs.Add(bomb); // добаваление бомбы 
             return true;
         }
        
