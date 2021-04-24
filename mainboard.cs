@@ -1,10 +1,11 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
 using System;
+using System.Collections.Generic;
 
 namespace bomberman   // локация 
 {
-    public delegate void deBlow(); // метод взрыва 
+    public delegate void deBlow(Bomb b); // метод взрыва  delegate - передает ссылку на функцию что бы вызвать 
     enum Sost    // перечисление состояний на поле 
     {
         пусто,
@@ -23,10 +24,11 @@ namespace bomberman   // локация
         int sizeY = 11;     // высота игрового поля 
         static Random rand = new Random(); // рандом для создание блоков которые можно будет рушить 
         Player player; // наш игрок
-        Mob mob; // противник(моб, враг)
+        List<Mob> mobs; // враг 
          public MainBoard(Panel panel) // конструктор 
         {
             panelGame = panel; // присвоение понели 
+            mobs = new List<Mob>(); 
             int boxSize;
             if ((panelGame.Width / sizeX) < (panelGame.Height / sizeY))  // узнаем размер бокса ( что чего больше по Х или У) и делим 
                 boxSize = panelGame.Width / sizeX;
@@ -139,7 +141,7 @@ namespace bomberman   // локация
             picture.SizeMode = PictureBoxSizeMode.StretchImage; // задний фон растянуло на всю клеточку 
             panelGame.Controls.Add(picture); // добавление картинку на контролс
             picture.BringToFront(); // выджвижение mob на передний фон 
-            mob = new Mob(picture, mapPic, map);
+            mobs.Add(new Mob(picture, mapPic, map)); // передача инфы мобу 
         }
         private void FindEmptyPlace(out int x, out int y) // ищет пустое место для создание моба 
         {
@@ -161,8 +163,98 @@ namespace bomberman   // локация
         {
             Point playerPoint = player.MyNowPoint(); // расположение игрока
             if (map[playerPoint.X, playerPoint.Y] == Sost.бомба) return; // нельзя ставить 2 бомбы на одном месте 
-            if (player.PutBomb(mapPic)) // проверка можно ли бомбу ставить 
+            if (player.PutBomb(mapPic, deBlow)) // проверка можно ли бомбу ставить 
                 ChangeSost(player.MyNowPoint(), Sost.бомба); // установка самой бомбы на позиций игрока 
+        }
+
+        private void deBlow(Bomb bomb) // взрыв бомбы
+        {
+            ChangeSost(bomb.bombPlace, Sost.огонь); //бомбу меняем на взрыв 
+            // функция для растановки огня по направлению лево, право , верх, вниз
+            Flame(bomb.bombPlace, Arrows.left);
+            Flame(bomb.bombPlace, Arrows.right);
+            Flame(bomb.bombPlace, Arrows.up);
+            Flame(bomb.bombPlace, Arrows.down);
+            player.RemoveBomb(bomb);  // удаление мобов 
+            Blaze(); // удаление мобов 
+            //  MessageBox.Show(str); // вызывает окошка бэнг
+        }
+
+        private void Blaze() // удаление мобов 
+        {
+            List<Mob> delMobs = new List<Mob>(); 
+            foreach(Mob mob in mobs) // перебераем мобов которые находиться на огне 
+            {
+                Point mobPoint = mob.MyNowPoint();
+                if (map[mobPoint.X, mobPoint.Y] == Sost.огонь)
+                    delMobs.Add(mob); 
+            }
+            for(int x=0; x < delMobs.Count; x++) // удаление мобов 
+            {
+                mobs.Remove(delMobs[x]); // удаляем моб с индексом моба 
+                panelGame.Controls.Remove(delMobs[x].mob); // удаляем моба с карты 
+                delMobs[x] = null; // адрес пустоты устанавливаем 
+            }
+            GC.Collect(); // очищение памяти, после удаление обьектов 
+            GC.WaitForPendingFinalizers(); 
+        }
+        private void Flame(Point bombPlace, Arrows arrow) // размещает огонь 
+        {
+            int sx = 0, sy = 0;
+            switch (arrow)
+            {
+                case Arrows.left:
+                    sx = -1;
+                    break;
+                case Arrows.right:
+                    sx = 1;
+                    break;
+                case Arrows.up:
+                    sy = -1;
+                    break;
+                case Arrows.down:
+                    sy = 1;
+                    break;
+                default:
+                    break; 
+            }
+                                
+            bool isNotDone = true;
+            int x = 0, y = 0;
+            do
+            {
+                x += sx; y += sy; 
+                if (Math.Abs(x) > player.leftFire || Math.Abs(y) > player.leftFire)
+                    break;
+                if (isFire(bombPlace, x, y)) // может быть огонь, и изменяем состояние карты на огонь
+                    ChangeSost(new Point(bombPlace.X + x, bombPlace.Y + y), Sost.огонь);
+                else
+                    isNotDone = false;
+
+            } while (isNotDone);
+
+        }
+        private bool isFire(Point place, int sx, int sy) // проверяет можем ли мы состояние карты поменять на огонь 
+        {                                    
+            switch(map[place.X+sx,place.Y+sy])// проверяем состояние карты                             
+            {
+                case Sost.пусто:
+                    return true;
+                case Sost.стена:
+                    return false;
+                case Sost.бомба:   // взрываем бомбы если они на пути бомбы 
+                   foreach(Bomb bomb in player.bombs)
+                    {
+                        if (bomb.bombPlace == new Point(place.X + sx, place.Y + sy))
+                            bomb.Reaction(); 
+                    }
+                    return false;
+                default:
+                    return true; 
+                                            
+            }         
+
+
         }
     }
 }

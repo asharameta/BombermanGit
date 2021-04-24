@@ -22,13 +22,15 @@ namespace bomberman
         Sost[,] map; // состояние карты что бы враг не ходил на блоки 
         int step; // длина шага
         MovingClass moving; // класс для движение игрока, содержит функций движение игрока
-        List<Bomb> bombs; // массив бомб
+      public List<Bomb> bombs { get; private set; } // массив бомб
         int NumOfBomb; // количество бомб
+        public int leftFire { get; private set; } // сделали публичную переменную, НО получить можно, но нельзя изменить (сила огня) 
         public Player(PictureBox _player, PictureBox[,]_mapPic, Sost[,] _map) // конструктор 
         {
             player = _player;
             step = 5;
             NumOfBomb = 3;
+            leftFire = 3; 
             bombs = new List<Bomb>();
             moving = new MovingClass(_player,_mapPic,_map); // создали движение игрока 
         }
@@ -57,13 +59,16 @@ namespace bomberman
         {
             return moving.MyNowPoint();
         }
-        public bool PutBomb(PictureBox[,] mapPic)// можно ли ставить бомбу или нет 
+        public bool PutBomb(PictureBox[,] mapPic, deBlow bb)// можно ли ставить бомбу или нет 
         {
             if (bombs.Count() >= NumOfBomb) return false; // нету бомб
-            Bomb bomb = new Bomb(mapPic, MyNowPoint()); // создание бомбы 
+            Bomb bomb = new Bomb(mapPic, MyNowPoint(), bb); // создание бомбы 
             bombs.Add(bomb); // добаваление бомбы 
             return true;
         }
-       
+       public void RemoveBomb(Bomb bomb) // удаление бомб 
+        {
+            bombs.Remove(bomb); 
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace bomberman
     /// </summary>
     class Mob
     {
-        PictureBox mob; // создание картинки моба 
+       public PictureBox mob { get; private set; } // создание картинки моба 
         Timer timer; // таймер отвечает за движение моба 
         Point destinePlace; // поинт точка до которой двигается моб 
         Point MobPlace;  // поинт что бы добрался враг 
@@ -146,6 +146,10 @@ namespace bomberman
                 destinePlace.Y = rand.Next(1, map.GetLength(1) - 1);
             } while (!FindPath() && loop++<300); // наден путь или нет, и второе страховка шоб выйти из цикла
             if (loop >= 300) destinePlace = MobPlace; // якобы нашел путь .... 
+        }
+        public Point MyNowPoint() // расспложение врага 
+        {
+            return moving.MyNowPoint(); 
         }
     }
 }

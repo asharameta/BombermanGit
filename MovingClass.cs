@@ -51,7 +51,7 @@ namespace bomberman
 
             int offset = 10; // для плавного перемещение. смещение игрока
 
-            if (sx > 0 && map[playerPoint.X + 1, playerPoint.Y] == Sost.пусто)
+            if (sx > 0 && (map[playerPoint.X + 1, playerPoint.Y] == Sost.пусто || map[playerPoint.X + 1, playerPoint.Y] == Sost.огонь))
             {
                 if (playerUp < rightUpWallDown)
                     if (rightUpWallDown - playerUp > offset)
@@ -65,7 +65,7 @@ namespace bomberman
                         sy = rightDownWallUp - playerDown;
                 return true;
             }
-            if (sx < 0 && map[playerPoint.X - 1, playerPoint.Y] == Sost.пусто)
+            if (sx < 0 && (map[playerPoint.X - 1, playerPoint.Y] == Sost.пусто|| map[playerPoint.X - 1, playerPoint.Y] == Sost.огонь))
             {
                 if (playerUp < leftUpWallDown)
                     if (leftUpWallDown - playerUp > offset)
@@ -79,7 +79,7 @@ namespace bomberman
                         sy = leftDownWallUp - playerDown;
                 return true;
             }
-            if (sy > 0 && map[playerPoint.X, playerPoint.Y + 1] == Sost.пусто)
+            if (sy > 0 && (map[playerPoint.X, playerPoint.Y + 1] == Sost.пусто || map[playerPoint.X, playerPoint.Y + 1] == Sost.огонь))
             {
                 if (playerRight > rightDownWallLeft)
                     if (rightDownWallLeft - playerRight < -offset)
@@ -93,7 +93,7 @@ namespace bomberman
                         sx = leftDownWallRight - playerLeft;
                 return true;
             }
-            if (sy < 0 && map[playerPoint.X, playerPoint.Y - 1] == Sost.пусто)
+            if (sy < 0 && (map[playerPoint.X, playerPoint.Y - 1] == Sost.пусто|| map[playerPoint.X, playerPoint.Y - 1] == Sost.огонь))
             {
                 if (playerRight > rightUpWallLeft)
                     if (rightUpWallLeft - playerRight < -offset)

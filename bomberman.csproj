@@ -85,6 +85,7 @@
     <Compile Include="FormGame.Designer.cs">
       <DependentUpon>FormGame.cs</DependentUpon>
     </Compile>
+    <Compile Include="Liset.cs" />
     <Compile Include="MainBoard.cs" />
     <Compile Include="Mob.cs" />
     <Compile Include="MovingClass.cs" />

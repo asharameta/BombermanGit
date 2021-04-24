@@ -5,19 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace bomberman
 {
-    class Bomb
+ public class Bomb
     {
         Timer timer;  // таймер бомбы 
         int NumberOfSec = 4; //таймер бомбы, время взрыва 
         PictureBox[,] mapPic; // картинки цифр 
-        Point bombPlace; // разположение бомбы
-        public Bomb(PictureBox[,]_mapPic, Point _bombPlace)
+       public Point bombPlace { get; private set;  } // разположение бомбы .  (получаем место положение бомбы из других функций, но изменять не можем) 
+        deBlow baBah; // взрыв 
+        public Bomb(PictureBox[,]_mapPic, Point _bombPlace, deBlow bb)
         {
             mapPic = _mapPic; // картинки цифр 
             bombPlace = _bombPlace;// распложение бомб от игрока
+            baBah = bb;  //взрыв ссылка на метод 
             CreateTimer(); // запуск таймер
             timer.Enabled = true;// вкл таймера
         }
@@ -30,8 +31,13 @@ namespace bomberman
         }
         void timer_tick(object sender, System.EventArgs e)
         {
+            if(NumberOfSec <= 0) // кончилось время бомбы 
+            {
+                timer.Enabled = false; // выключаем таймер 
+                baBah(this); // взрыв 
+                return; 
+            }
             WriteTimer(--NumberOfSec); // рисует цифры на бомбе 
-            //throw new System.NotImplementedException();
         }
         private void WriteTimer(int num) // показывает время на бомбе 
         {
@@ -43,7 +49,10 @@ namespace bomberman
                 graph.DrawString(num.ToString(), new Font("Arial", 10), Brushes.Red, point);//рисование таймера (что рисуем, стиль шрифта, цвет , где)
             }
         }
+        public void Reaction() // мгновенно зрывает бомбу, таймер = 0, сделанно если возрвали бомба об бомбу 
+        {
+            NumberOfSec = 0; 
+        }
+
     }
-
-
 }
