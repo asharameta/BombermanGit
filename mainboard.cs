@@ -25,8 +25,10 @@ namespace bomberman   // локация
         static Random rand = new Random(); // рандом для создание блоков которые можно будет рушить 
         Player player; // наш игрок
         List<Mob> mobs; // враг 
-         public MainBoard(Panel panel) // конструктор 
+        deClear NeedClear;
+         public MainBoard(Panel panel, deClear _clear) // конструктор 
         {
+            NeedClear = _clear;
             panelGame = panel; // присвоение понели 
             mobs = new List<Mob>(); 
             int boxSize;
@@ -113,21 +115,23 @@ namespace bomberman   // локация
             }
           map[point.X, point.Y] = newSost; // состояние карты
         }
-
+       
         private void InitStartPlayer(int boxSize)
         {
             int x = 1, y = 1;  // кординаты создание главного игрока
             PictureBox picture = new PictureBox(); //кортинка главного игрока
+            Bitmap picture1 = new Bitmap(Properties.Resources.player);
             picture.Location = new Point(x * (boxSize) + 7, y * (boxSize) + 3); // местоположение игрока  (по середине)
-            picture.Size = new Size(boxSize - 14 , boxSize - 6); // размер игрока               (можно редактировать)
+            picture.Size = new Size(boxSize - 14, boxSize - 6); // размер игрока               (можно редактировать)
             picture.Image = Properties.Resources.player; // присвоение картинки игрока
-            picture.BackgroundImage = Properties.Resources.grass;  // задний фон игрока 
+            picture.BackgroundImage = Properties.Resources.grass;  // задний фон игрока
             picture.BackgroundImageLayout = ImageLayout.Stretch;  // задний фон растянуло на всю клеточку 
             picture.SizeMode = PictureBoxSizeMode.StretchImage; // задний фон растянуло на всю клеточку 
             panelGame.Controls.Add(picture); // добавление картинку на контролс
             picture.BringToFront(); // выджвижение игрока на передний фон 
-            player = new Player(picture,mapPic,map);  // присвоили картинку игрока к игроку (классу) 
+            player = new Player(picture, mapPic, map);  // присвоили картинку игрока к игроку (классу) 
         }
+
         private void InitMob(int boxSize) // создание моба 
         {
             int x = sizeX - 2, y = sizeY - 2;  // кординаты создание моба
@@ -178,6 +182,8 @@ namespace bomberman   // локация
             player.RemoveBomb(bomb);  // удаление мобов 
             Blaze(); // удаление мобов 
             //  MessageBox.Show(str); // вызывает окошка бэнг
+
+            NeedClear();
         }
 
         private void Blaze() // удаление мобов 
@@ -255,6 +261,26 @@ namespace bomberman   // локация
             }         
 
 
+        }
+        public void ClearFire()
+        {
+            for (int x = 0; x < map.GetLength(0); x++)
+                for (int y = 0; y < map.GetLength(1); y++)
+                {
+                    if (map[x, y] == Sost.огонь)
+                        ChangeSost(new Point(x, y), Sost.пусто);
+                }
+        }
+        public bool GameOver()
+        {
+            Point myPoint = player.MyNowPoint();
+            if (map[myPoint.X, myPoint.Y] == Sost.огонь) return true;
+            if (mobs.Count == 0) return true;
+            foreach (Mob mob in mobs)
+            {
+                if (myPoint == mob.MyNowPoint()) return true;
+            }
+            return false;
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace bomberman
 {
+    public delegate void deClear();
     public partial class FormGame : Form
     {
         MainBoard board;
@@ -17,11 +18,12 @@ namespace bomberman
         public FormGame()
         {
             InitializeComponent();
-            Init(); // запуска игрового поля 
+            NewGame(); // запуска игрового поля 
         }
-        private void Init()
+        private void NewGame()
         {
-            board = new MainBoard(panelGame);  //создание карты панели 
+            board = new MainBoard(panelGame, StartClear);  //создание карты панели 
+            GameOverTimer.Enabled = true;
         }
 
         private void formgame_Load(object sender, EventArgs e)
@@ -78,24 +80,63 @@ namespace bomberman
 
         private void FormGame_KeyDown(object sender, KeyEventArgs e) // при нажатие клавиатуры (форма, клавиша) 
         {
-            switch (e.KeyCode) // нажатие клавиши(движение игрока) 
+            if (GameOverTimer.Enabled)
             {
-                  // управление стрелочками (вчитывает символ, и в майнборд, передает значение) 
-                case Keys.Left: board.MovePlayer(Arrows.left); break;
-                case Keys.Right: board.MovePlayer(Arrows.right); break;
-                case Keys.Up: board.MovePlayer(Arrows.up); break;
-                case Keys.Down: board.MovePlayer(Arrows.down); break;
+                switch (e.KeyCode) // нажатие клавиши(движение игрока) 
+                {
+                    // управление стрелочками (вчитывает символ, и в майнборд, передает значение) 
+                    case Keys.Left: board.MovePlayer(Arrows.left); break;
+                    case Keys.Right: board.MovePlayer(Arrows.right); break;
+                    case Keys.Up: board.MovePlayer(Arrows.up); break;
+                    case Keys.Down: board.MovePlayer(Arrows.down); break;
                     //управление буквами
-                case Keys.A: board.MovePlayer(Arrows.left); break;
-                case Keys.D: board.MovePlayer(Arrows.right); break;
-                case Keys.W: board.MovePlayer(Arrows.up); break;
-                case Keys.S: board.MovePlayer(Arrows.down); break;
-                case Keys.Space: board.PutBomb();break;
+                    case Keys.A: board.MovePlayer(Arrows.left); break;
+                    case Keys.D: board.MovePlayer(Arrows.right); break;
+                    case Keys.W: board.MovePlayer(Arrows.up); break;
+                    case Keys.S: board.MovePlayer(Arrows.down); break;
+                    case Keys.Space: board.PutBomb(); break;
 
-            }
-                    
+                }
+            }        
                     
       
+        }
+
+        private void timerFireClear_Tick(object sender, EventArgs e)
+        {
+            board.ClearFire();
+            timerFireClear.Enabled = false;
+        }
+        private void StartClear()
+        {
+            timerFireClear.Enabled = true;
+        }
+
+        private void GameOverTimer_Tick(object sender, EventArgs e)
+        {
+            if(board.GameOver())
+            {
+                GameOverTimer.Enabled = false;
+                DialogResult dr = MessageBox.Show("do you want to play again?", "Game Over!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr==System.Windows.Forms.DialogResult.Yes)
+                {
+                    NewGame(); 
+                }
+                /*else
+                {
+                    this.Close();//Это я от себя добавил если нажать No то закроется окно, а можно по его способу просто обездвижить игрока.
+                }*/
+            }
+        }
+
+        private void новаяИграToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewGame();
+        }
+
+        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

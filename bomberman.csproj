@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icons-Land-Multiple-Smiley-Bomb-Cool.ico" />
+    <None Include="sprite\backcolor.png" />
     <None Include="sprite\prize.png" />
     <None Include="sprite\playerUp.png" />
     <None Include="sprite\playerRight.png" />

@@ -22,25 +22,25 @@ namespace bomberman
         Sost[,] map; // состояние карты что бы враг не ходил на блоки 
         int step; // длина шага
         MovingClass moving; // класс для движение игрока, содержит функций движение игрока
-      public List<Bomb> bombs { get; private set; } // массив бомб
+        public List<Bomb> bombs { get; private set; } // массив бомб
         int NumOfBomb; // количество бомб
         public int leftFire { get; private set; } // сделали публичную переменную, НО получить можно, но нельзя изменить (сила огня) 
-        public Player(PictureBox _player, PictureBox[,]_mapPic, Sost[,] _map) // конструктор 
+        public Player(PictureBox _player, PictureBox[,] _mapPic, Sost[,] _map) // конструктор 
         {
             player = _player;
             step = 5;
             NumOfBomb = 3;
-            leftFire = 3; 
+            leftFire = 3;
             bombs = new List<Bomb>();
-            moving = new MovingClass(_player,_mapPic,_map); // создали движение игрока 
+            moving = new MovingClass(_player, _mapPic, _map); // создали движение игрока 
         }
 
         public void MovePlayer(Arrows arrow) // движение игрока 
         {
-           switch(arrow) // передвижение игрока (картинки его) спомощью функиця мув из класса МувингКласс
+            switch (arrow) // передвижение игрока (картинки его) спомощью функиця мув из класса МувингКласс
             {
                 case Arrows.left:
-                    moving.Move(-step,0);        
+                    moving.Move(-step, 0);
                     break;
                 case Arrows.right:
                     moving.Move(step, 0);
@@ -52,7 +52,7 @@ namespace bomberman
                     moving.Move(0, step);
                     break;
                 default:
-                    break; 
+                    break;
             }
         }
         public Point MyNowPoint() // позиция игрока, из класса мовинг 
@@ -66,9 +66,9 @@ namespace bomberman
             bombs.Add(bomb); // добаваление бомбы 
             return true;
         }
-       public void RemoveBomb(Bomb bomb) // удаление бомб 
+        public void RemoveBomb(Bomb bomb) // удаление бомб 
         {
-            bombs.Remove(bomb); 
+            bombs.Remove(bomb);
         }
     }
 }

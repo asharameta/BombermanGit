@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGame));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.StripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,6 +39,8 @@
             this.обАвтареToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelGame = new System.Windows.Forms.Panel();
             this.labelScore = new System.Windows.Forms.Label();
+            this.timerFireClear = new System.Windows.Forms.Timer(this.components);
+            this.GameOverTimer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,12 +73,14 @@
             this.новаяИграToolStripMenuItem.Name = "новаяИграToolStripMenuItem";
             this.новаяИграToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.новаяИграToolStripMenuItem.Text = "New Game";
+            this.новаяИграToolStripMenuItem.Click += new System.EventHandler(this.новаяИграToolStripMenuItem_Click);
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
             this.выходToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.выходToolStripMenuItem.Text = "Exit";
+            this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
             // 
             // справкаToolStripMenuItem
             // 
@@ -127,6 +132,15 @@
             this.labelScore.Text = "NewGame";
             this.labelScore.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // timerFireClear
+            // 
+            this.timerFireClear.Interval = 1000;
+            this.timerFireClear.Tick += new System.EventHandler(this.timerFireClear_Tick);
+            // 
+            // GameOverTimer
+            // 
+            this.GameOverTimer.Tick += new System.EventHandler(this.GameOverTimer_Tick);
+            // 
             // FormGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -164,6 +178,8 @@
         private System.Windows.Forms.ToolStripMenuItem обАвтареToolStripMenuItem;
         private System.Windows.Forms.Panel panelGame;
         private System.Windows.Forms.Label labelScore;
+        private System.Windows.Forms.Timer timerFireClear;
+        private System.Windows.Forms.Timer GameOverTimer;
     }
 }
 
