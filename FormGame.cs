@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace bomberman
 {
-    public delegate void deClear();
+    public delegate void deClear(); // очистка 
     public partial class FormGame : Form
     {
         MainBoard board;
@@ -30,8 +30,8 @@ namespace bomberman
         {
 
         }
-
-        private void обИгреToolStripMenuItem_Click(object sender, EventArgs e) //описание меню игры 
+        //обИгреToolStripMenuItem_Click
+        private void AboutGameToolStripMenuItem_Click(object sender, EventArgs e) //описание меню игры 
         {
             MessageBox.Show(
                 "Most of the games in the series are made in the genre of arcade maze. " +
@@ -54,7 +54,7 @@ namespace bomberman
 
         private void обАвтареToolStripMenuItem_Click(object sender, EventArgs e)//описание меню автора
         {
-            MessageBox.Show("Anton Pashkevich, Aliaksei Sharameta, Kiryl Lysiuk \nStudents of the University of Lodz \n3rd year students, Computer graphics and Game Programming" +
+            MessageBox.Show("Anton Pashkevich, Aliaksei Sharameta \nStudents of the University of Lodz \n3rd year students, Computer graphics and Game Programming" +
                 "\nFor feedback: natoy7000@gmail.com", "About Authors"); 
         }
 
@@ -102,12 +102,12 @@ namespace bomberman
       
         }
 
-        private void timerFireClear_Tick(object sender, EventArgs e)
+        private void timerFireClear_Tick(object sender, EventArgs e) // таймер вычещение огня после зрыва
         {
-            board.ClearFire();
-            timerFireClear.Enabled = false;
+            board.ClearFire(); // запуск функций вычещение огня 
+            timerFireClear.Enabled = false; // выкл таймера 
         }
-        private void StartClear()
+        private void StartClear() // включение таймера вычищение огня 
         {
             timerFireClear.Enabled = true;
         }
@@ -138,5 +138,7 @@ namespace bomberman
         {
             this.Close();
         }
+
+
     }
 }

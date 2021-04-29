@@ -20,7 +20,7 @@ namespace bomberman
                 player.Location = new Point(player.Location.X + sx, player.Location.Y + sy);
         }
 
-        private bool isEmpty(ref int sx, ref int sy) // пустота на карте можно идти , ref дает права для изменение переменных 
+        private bool isEmpty(ref int sx, ref int sy) // emptyта на карте можно идти , ref дает права для изменение переменных 
         {
             Point playerPoint = MyNowPoint(); // месположение игрока
 
@@ -51,7 +51,7 @@ namespace bomberman
 
             int offset = 10; // для плавного перемещение. смещение игрока
 
-            if (sx > 0 && (map[playerPoint.X + 1, playerPoint.Y] == Sost.пусто || map[playerPoint.X + 1, playerPoint.Y] == Sost.огонь))
+            if (sx > 0 && (map[playerPoint.X + 1, playerPoint.Y] == Sost.empty || map[playerPoint.X + 1, playerPoint.Y] == Sost.fire))
             {
                 if (playerUp < rightUpWallDown)
                     if (rightUpWallDown - playerUp > offset)
@@ -65,7 +65,7 @@ namespace bomberman
                         sy = rightDownWallUp - playerDown;
                 return true;
             }
-            if (sx < 0 && (map[playerPoint.X - 1, playerPoint.Y] == Sost.пусто|| map[playerPoint.X - 1, playerPoint.Y] == Sost.огонь))
+            if (sx < 0 && (map[playerPoint.X - 1, playerPoint.Y] == Sost.empty|| map[playerPoint.X - 1, playerPoint.Y] == Sost.fire))
             {
                 if (playerUp < leftUpWallDown)
                     if (leftUpWallDown - playerUp > offset)
@@ -79,7 +79,7 @@ namespace bomberman
                         sy = leftDownWallUp - playerDown;
                 return true;
             }
-            if (sy > 0 && (map[playerPoint.X, playerPoint.Y + 1] == Sost.пусто || map[playerPoint.X, playerPoint.Y + 1] == Sost.огонь))
+            if (sy > 0 && (map[playerPoint.X, playerPoint.Y + 1] == Sost.empty || map[playerPoint.X, playerPoint.Y + 1] == Sost.fire))
             {
                 if (playerRight > rightDownWallLeft)
                     if (rightDownWallLeft - playerRight < -offset)
@@ -93,7 +93,7 @@ namespace bomberman
                         sx = leftDownWallRight - playerLeft;
                 return true;
             }
-            if (sy < 0 && (map[playerPoint.X, playerPoint.Y - 1] == Sost.пусто|| map[playerPoint.X, playerPoint.Y - 1] == Sost.огонь))
+            if (sy < 0 && (map[playerPoint.X, playerPoint.Y - 1] == Sost.empty|| map[playerPoint.X, playerPoint.Y - 1] == Sost.fire))
             {
                 if (playerRight > rightUpWallLeft)
                     if (rightUpWallLeft - playerRight < -offset)

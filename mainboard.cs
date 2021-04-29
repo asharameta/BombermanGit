@@ -8,12 +8,12 @@ namespace bomberman   // локация
     public delegate void deBlow(Bomb b); // метод взрыва  delegate - передает ссылку на функцию что бы вызвать 
     enum Sost    // перечисление состояний на поле 
     {
-        пусто,
-        стена,
-        кирпич,
-        бомба,
-        огонь,
-        приз
+        empty,
+        wall,
+        brick,
+        bomb,
+        fire,
+        bonus
     }
     class MainBoard
     {
@@ -25,10 +25,10 @@ namespace bomberman   // локация
         static Random rand = new Random(); // рандом для создание блоков которые можно будет рушить 
         Player player; // наш игрок
         List<Mob> mobs; // враг 
-        deClear NeedClear;
+        deClear NeedClear; // делегат очистки огня
          public MainBoard(Panel panel, deClear _clear) // конструктор 
         {
-            NeedClear = _clear;
+            NeedClear = _clear;  // очищение огня поосле бомбы
             panelGame = panel; // присвоение понели 
             mobs = new List<Mob>(); 
             int boxSize;
@@ -59,24 +59,24 @@ namespace bomberman   // локация
                 for(int y=0; y<sizeY; y++)
                 {
                     if(x==0 || y==0 || x == sizeX - 1 || y == sizeY -1 ) // рамка стены 
-                        CreatePlace(new Point(x, y), boxSize, Sost.стена);
+                        CreatePlace(new Point(x, y), boxSize, Sost.wall);
                     else if(x%2 == 0 && y%2==0)  // через 2 бокса стенка
-                        CreatePlace(new Point(x, y), boxSize, Sost.стена);
-                    else if(rand.Next(3) == 0) // рандом из 3 чисел, когда выбодит число 0 создаст кирпич 
-                        CreatePlace(new Point(x, y), boxSize, Sost.кирпич);
+                        CreatePlace(new Point(x, y), boxSize, Sost.wall);
+                    else if(rand.Next(3) == 0) // рандом из 3 чисел, когда выбодит число 0 создаст brick 
+                        CreatePlace(new Point(x, y), boxSize, Sost.brick);
                     else
-                        CreatePlace(new Point(x, y), boxSize, Sost.пусто);
+                        CreatePlace(new Point(x, y), boxSize, Sost.empty);
                     //   CreatePlace(new Point(x, y), boxSize,); 
                 }
 
             // пустые три клеточки, для игрока что бы он мог запуститься и не подорвать себя что бы выйти из керпичей 
-            ChangeSost(new Point(1, 1),Sost.пусто);
-            ChangeSost(new Point(2, 1), Sost.пусто);
-            ChangeSost(new Point(1, 2), Sost.пусто);
+            ChangeSost(new Point(1, 1),Sost.empty);
+            ChangeSost(new Point(2, 1), Sost.empty);
+            ChangeSost(new Point(1, 2), Sost.empty);
         }
         private void CreatePlace(Point point, int boxSize, Sost sost) // заполнение карты 
         {
-            PictureBox picture = new PictureBox(); // создание пустого 
+            PictureBox picture = new PictureBox(); // создание emptyго 
              // настроика 
            picture.Location = new Point(point.X * (boxSize - 1), point.Y * (boxSize - 1)); // место положение Box
             picture.Size = new Size(boxSize, boxSize);    // размер  Box
@@ -94,19 +94,19 @@ namespace bomberman   // локация
             switch (newSost) // присвоение картинки 
             {
 
-                case Sost.стена:
+                case Sost.wall:
                     mapPic[point.X, point.Y].Image = Properties.Resources.wall;
                     break;
-                case Sost.кирпич:
+                case Sost.brick:
                     mapPic[point.X, point.Y].Image = Properties.Resources.brick;
                     break;
-                case Sost.бомба:
+                case Sost.bomb:
                     mapPic[point.X, point.Y].Image = Properties.Resources.bomb;
                     break;
-                case Sost.огонь:
+                case Sost.fire:
                     mapPic[point.X, point.Y].Image = Properties.Resources.fire;
                     break;
-                case Sost.приз:
+                case Sost.bonus:
                         mapPic[point.X, point.Y].Image = Properties.Resources.prize;  
                     break;
                 default:
@@ -147,14 +147,14 @@ namespace bomberman   // локация
             picture.BringToFront(); // выджвижение mob на передний фон 
             mobs.Add(new Mob(picture, mapPic, map)); // передача инфы мобу 
         }
-        private void FindEmptyPlace(out int x, out int y) // ищет пустое место для создание моба 
+        private void FindEmptyPlace(out int x, out int y) // ищет emptyе место для создание моба 
         {
-            int loop = 0; // выйти из цикла, если нету пустого места (страховка) 
+            int loop = 0; // выйти из цикла, если нету emptyго места (страховка) 
             do
             {
                 x = rand.Next(map.GetLength(0)/2, map.GetLength(0)); // рандомное число с половины поля, что бы не появлялись около врага 
                 y = rand.Next(1, map.GetLength(1));
-            } while (map[x,y]!=Sost.пусто&&loop++<100);
+            } while (map[x,y]!=Sost.empty&&loop++<100);
         }
 
         public void MovePlayer(Arrows arrow) // движение игрока
@@ -166,14 +166,14 @@ namespace bomberman   // локация
         public void PutBomb() // установка бомбы 
         {
             Point playerPoint = player.MyNowPoint(); // расположение игрока
-            if (map[playerPoint.X, playerPoint.Y] == Sost.бомба) return; // нельзя ставить 2 бомбы на одном месте 
+            if (map[playerPoint.X, playerPoint.Y] == Sost.bomb) return; // нельзя ставить 2 бомбы на одном месте 
             if (player.PutBomb(mapPic, deBlow)) // проверка можно ли бомбу ставить 
-                ChangeSost(player.MyNowPoint(), Sost.бомба); // установка самой бомбы на позиций игрока 
+                ChangeSost(player.MyNowPoint(), Sost.bomb); // установка самой бомбы на позиций игрока 
         }
 
         private void deBlow(Bomb bomb) // взрыв бомбы
         {
-            ChangeSost(bomb.bombPlace, Sost.огонь); //бомбу меняем на взрыв 
+            ChangeSost(bomb.bombPlace, Sost.fire); //бомбу меняем на взрыв 
             // функция для растановки огня по направлению лево, право , верх, вниз
             Flame(bomb.bombPlace, Arrows.left);
             Flame(bomb.bombPlace, Arrows.right);
@@ -183,7 +183,7 @@ namespace bomberman   // локация
             Blaze(); // удаление мобов 
             //  MessageBox.Show(str); // вызывает окошка бэнг
 
-            NeedClear();
+            NeedClear(); // очистка поли от огня
         }
 
         private void Blaze() // удаление мобов 
@@ -192,19 +192,19 @@ namespace bomberman   // локация
             foreach(Mob mob in mobs) // перебераем мобов которые находиться на огне 
             {
                 Point mobPoint = mob.MyNowPoint();
-                if (map[mobPoint.X, mobPoint.Y] == Sost.огонь)
+                if (map[mobPoint.X, mobPoint.Y] == Sost.fire)
                     delMobs.Add(mob); 
             }
             for(int x=0; x < delMobs.Count; x++) // удаление мобов 
             {
                 mobs.Remove(delMobs[x]); // удаляем моб с индексом моба 
                 panelGame.Controls.Remove(delMobs[x].mob); // удаляем моба с карты 
-                delMobs[x] = null; // адрес пустоты устанавливаем 
+                delMobs[x] = null; // адрес emptyты устанавливаем 
             }
             GC.Collect(); // очищение памяти, после удаление обьектов 
             GC.WaitForPendingFinalizers(); 
         }
-        private void Flame(Point bombPlace, Arrows arrow) // размещает огонь 
+        private void Flame(Point bombPlace, Arrows arrow) // размещает fire 
         {
             int sx = 0, sy = 0;
             switch (arrow)
@@ -232,23 +232,23 @@ namespace bomberman   // локация
                 x += sx; y += sy; 
                 if (Math.Abs(x) > player.leftFire || Math.Abs(y) > player.leftFire)
                     break;
-                if (isFire(bombPlace, x, y)) // может быть огонь, и изменяем состояние карты на огонь
-                    ChangeSost(new Point(bombPlace.X + x, bombPlace.Y + y), Sost.огонь);
+                if (isFire(bombPlace, x, y)) // может быть fire, и изменяем состояние карты на fire
+                    ChangeSost(new Point(bombPlace.X + x, bombPlace.Y + y), Sost.fire);
                 else
                     isNotDone = false;
 
             } while (isNotDone);
 
         }
-        private bool isFire(Point place, int sx, int sy) // проверяет можем ли мы состояние карты поменять на огонь 
+        private bool isFire(Point place, int sx, int sy) // проверяет можем ли мы состояние карты поменять на fire 
         {                                    
             switch(map[place.X+sx,place.Y+sy])// проверяем состояние карты                             
             {
-                case Sost.пусто:
+                case Sost.empty:
                     return true;
-                case Sost.стена:
+                case Sost.wall:
                     return false;
-                case Sost.бомба:   // взрываем бомбы если они на пути бомбы 
+                case Sost.bomb:   // взрываем бомбы если они на пути бомбы 
                    foreach(Bomb bomb in player.bombs)
                     {
                         if (bomb.bombPlace == new Point(place.X + sx, place.Y + sy))
@@ -262,19 +262,19 @@ namespace bomberman   // локация
 
 
         }
-        public void ClearFire()
+        public void ClearFire()  // очистка огня 
         {
             for (int x = 0; x < map.GetLength(0); x++)
                 for (int y = 0; y < map.GetLength(1); y++)
                 {
-                    if (map[x, y] == Sost.огонь)
-                        ChangeSost(new Point(x, y), Sost.пусто);
+                    if (map[x, y] == Sost.fire) // изменяем состояние огня на пустое 
+                        ChangeSost(new Point(x, y), Sost.empty);
                 }
         }
         public bool GameOver()
         {
             Point myPoint = player.MyNowPoint();
-            if (map[myPoint.X, myPoint.Y] == Sost.огонь) return true;
+            if (map[myPoint.X, myPoint.Y] == Sost.fire) return true;
             if (mobs.Count == 0) return true;
             foreach (Mob mob in mobs)
             {

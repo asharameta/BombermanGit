@@ -128,7 +128,7 @@ namespace bomberman
             if (x < 0 || x >= map.GetLength(0)) return; // если значение ушло за карту 
             if (y < 0 || y >= map.GetLength(1)) return;
             if (fmap[x, y] > 0) return; // что бы не ходил встороны и по проиденному пути 1,2,3,4 и т.д а нет 1,1,1,1,1 
-            if (map[x, y] != Sost.пусто) return;  // если не пусто выходим 
+            if (map[x, y] != Sost.empty) return;  // если не пусто выходим 
             fmap[x, y] = n; //отмечаем что можно идти дальше 
         }
         private bool IsPath(int x, int y, int n)
