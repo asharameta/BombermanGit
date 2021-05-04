@@ -41,6 +41,11 @@
             this.labelScore = new System.Windows.Forms.Label();
             this.timerFireClear = new System.Windows.Forms.Timer(this.components);
             this.GameOverTimer = new System.Windows.Forms.Timer(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.easyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.normalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,6 +67,7 @@
             // 
             this.StripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.новаяИграToolStripMenuItem,
+            this.levelToolStripMenuItem,
             this.выходToolStripMenuItem});
             this.StripMenuItem.Name = "StripMenuItem";
             this.StripMenuItem.Size = new System.Drawing.Size(46, 24);
@@ -73,14 +79,14 @@
             this.новаяИграToolStripMenuItem.Name = "новаяИграToolStripMenuItem";
             this.новаяИграToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.новаяИграToolStripMenuItem.Text = "New Game";
-            this.новаяИграToolStripMenuItem.Click += new System.EventHandler(this.новаяИграToolStripMenuItem_Click);
+            this.новаяИграToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
             this.выходToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.выходToolStripMenuItem.Text = "Exit";
-            this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
+            this.выходToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // справкаToolStripMenuItem
             // 
@@ -90,21 +96,21 @@
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
             this.справкаToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.справкаToolStripMenuItem.Text = "Help";
-            this.справкаToolStripMenuItem.Click += new System.EventHandler(this.справкаToolStripMenuItem_Click);
+            this.справкаToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
             // 
             // AboutGameToolStripMenuItem
             // 
             this.AboutGameToolStripMenuItem.Name = "AboutGameToolStripMenuItem";
-            this.AboutGameToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.AboutGameToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
             this.AboutGameToolStripMenuItem.Text = "About Game";
             this.AboutGameToolStripMenuItem.Click += new System.EventHandler(this.AboutGameToolStripMenuItem_Click);
             // 
             // обАвтареToolStripMenuItem
             // 
             this.обАвтареToolStripMenuItem.Name = "обАвтареToolStripMenuItem";
-            this.обАвтареToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.обАвтареToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
             this.обАвтареToolStripMenuItem.Text = "About Author";
-            this.обАвтареToolStripMenuItem.Click += new System.EventHandler(this.обАвтареToolStripMenuItem_Click);
+            this.обАвтареToolStripMenuItem.Click += new System.EventHandler(this.AboutAuthorToolStripMenuItem_Click);
             // 
             // panelGame
             // 
@@ -139,6 +145,41 @@
             // GameOverTimer
             // 
             this.GameOverTimer.Tick += new System.EventHandler(this.GameOverTimer_Tick);
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // levelToolStripMenuItem
+            // 
+            this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.easyToolStripMenuItem,
+            this.normalToolStripMenuItem,
+            this.hardToolStripMenuItem});
+            this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
+            this.levelToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.levelToolStripMenuItem.Text = "Level";
+            // 
+            // easyToolStripMenuItem
+            // 
+            this.easyToolStripMenuItem.Name = "easyToolStripMenuItem";
+            this.easyToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.easyToolStripMenuItem.Text = "Easy";
+            this.easyToolStripMenuItem.Click += new System.EventHandler(this.easyToolStripMenuItem_Click);
+            // 
+            // normalToolStripMenuItem
+            // 
+            this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
+            this.normalToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.normalToolStripMenuItem.Text = "Normal";
+            this.normalToolStripMenuItem.Click += new System.EventHandler(this.normalToolStripMenuItem_Click);
+            // 
+            // hardToolStripMenuItem
+            // 
+            this.hardToolStripMenuItem.Name = "hardToolStripMenuItem";
+            this.hardToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.hardToolStripMenuItem.Text = "Hard";
+            this.hardToolStripMenuItem.Click += new System.EventHandler(this.hardToolStripMenuItem_Click);
             // 
             // FormGame
             // 
@@ -179,6 +220,11 @@
         private System.Windows.Forms.Label labelScore;
         private System.Windows.Forms.Timer timerFireClear;
         private System.Windows.Forms.Timer GameOverTimer;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ToolStripMenuItem levelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem easyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem normalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hardToolStripMenuItem;
     }
 }
 

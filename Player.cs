@@ -25,14 +25,18 @@ namespace bomberman
         public List<Bomb> bombs { get; private set; } // массив бомб
         int NumOfBomb; // количество бомб
         public int leftFire { get; private set; } // сделали публичную переменную, НО получить можно, но нельзя изменить (сила огня) 
-        public Player(PictureBox _player, PictureBox[,] _mapPic, Sost[,] _map) // конструктор 
+        Label score;  // статистика (на панели) 
+
+        public Player(PictureBox _player, PictureBox[,] _mapPic, Sost[,] _map, Label lbScore) // конструктор 
         {
             player = _player;
             step = 5;
             NumOfBomb = 3;
             leftFire = 3;
+            score = lbScore;
             bombs = new List<Bomb>();
             moving = new MovingClass(_player, _mapPic, _map); // создали движение игрока 
+            ChageScore();
         }
 
         public void MovePlayer(Arrows arrow) // движение игрока 
@@ -70,5 +74,11 @@ namespace bomberman
         {
             bombs.Remove(bomb);
         }
+        private void ChageScore() //статистика (на панели) 
+        {
+            if (score == null) return;
+            score.Text = "Speed: " + step + ", fire: " + leftFire; 
+        }
+
     }
 }

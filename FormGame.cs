@@ -14,6 +14,7 @@ namespace bomberman
     public partial class FormGame : Form
     {
         MainBoard board;
+        int level = 1; 
 
         public FormGame()
         {
@@ -22,8 +23,10 @@ namespace bomberman
         }
         private void NewGame()
         {
-            board = new MainBoard(panelGame, StartClear);  //создание карты панели 
-            GameOverTimer.Enabled = true;
+            board = new MainBoard(panelGame, StartClear, labelScore);  //создание карты панели 
+            ChageLevel(level); // меняет уровень;
+            GameOverTimer.Enabled = true; // вкл таймера проигрыша
+            timer1.Enabled = true;  // вкл таймера выйгреша
         }
 
         private void formgame_Load(object sender, EventArgs e)
@@ -52,7 +55,7 @@ namespace bomberman
                 "there is also a turn-based strategy game.", "Game Description");
         }
 
-        private void обАвтареToolStripMenuItem_Click(object sender, EventArgs e)//описание меню автора
+        private void AboutAuthorToolStripMenuItem_Click(object sender, EventArgs e)//описание меню автора
         {
             MessageBox.Show("Anton Pashkevich, Aliaksei Sharameta \nStudents of the University of Lodz \n3rd year students, Computer graphics and Game Programming" +
                 "\nFor feedback: natoy7000@gmail.com", "About Authors"); 
@@ -72,15 +75,14 @@ namespace bomberman
         {
 
         }
-
-        private void справкаToolStripMenuItem_Click(object sender, EventArgs e)
+        private void infoToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
 
         private void FormGame_KeyDown(object sender, KeyEventArgs e) // при нажатие клавиатуры (форма, клавиша) 
         {
-            if (GameOverTimer.Enabled)
+            if (GameOverTimer.Enabled) // таймер выкл, ты проиграл 
             {
                 switch (e.KeyCode) // нажатие клавиши(движение игрока) 
                 {
@@ -112,33 +114,70 @@ namespace bomberman
             timerFireClear.Enabled = true;
         }
 
-        private void GameOverTimer_Tick(object sender, EventArgs e)
+        private void GameOverTimer_Tick(object sender, EventArgs e) //проверяет проиграли 
         {
-            if(board.GameOver())
+            if(board.GameOver()) // игра закончилось  
             {
                 GameOverTimer.Enabled = false;
-                DialogResult dr = MessageBox.Show("do you want to play again?", "Game Over!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("You died!\nDo you want to play again?", "Game Over!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr==System.Windows.Forms.DialogResult.Yes)
                 {
                     NewGame(); 
                 }
-                /*else
+                else
                 {
                     this.Close();//Это я от себя добавил если нажать No то закроется окно, а можно по его способу просто обездвижить игрока.
-                }*/
+                }
+            }
+
+        }
+        private void timer1_Tick(object sender, EventArgs e) // выиграли 
+        {
+            if (board.GameFinish())
+            {
+                timer1.Enabled = false;
+                DialogResult dr = MessageBox.Show("You finish", "Game Finish!", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                if (dr == System.Windows.Forms.DialogResult.OK)
+                {
+                    this.Close();
+                }
+
             }
         }
 
-        private void новаяИграToolStripMenuItem_Click(object sender, EventArgs e)
+
+
+        private void newGameToolStripMenuItem_Click(object sender, EventArgs e) //перезапуск игр
         {
             NewGame();
         }
 
-        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e) // выход игры
         {
             this.Close();
         }
 
+        private void ChageLevel(int _level)
+        {
+            level = _level;
+            board.SetMobLevel(level); 
+        }
 
+
+        //смена сложности 
+        private void easyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChageLevel(1);
+        }
+
+        private void normalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChageLevel(2); 
+        }
+
+        private void hardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChageLevel(3); 
+        }
     }
 }

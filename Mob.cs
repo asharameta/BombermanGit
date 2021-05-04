@@ -10,11 +10,13 @@ namespace bomberman
 {
     /// <summary>
     /// 1. уровень сложности - выберает доступную точку и бежит к ней 
-    /// 2. уровень сложности - выберает доступную точку и бежит к ней, если видит бомку - убегает
+    /// 2. уровень сложности - выберает доступную точку и бежит к ней, если видит бомку или огонь - убегает
     /// 3. уровень сложности - бегает от точки к точку, если доступен человек бежит к нему, если встретил бомбу убегает
-    /// </summary>
+    /// </summary> 
+
     class Mob
     {
+        int level = 1; // уровень сложный 
        public PictureBox mob { get; private set; } // создание картинки моба 
         Timer timer; // таймер отвечает за движение моба 
         Point destinePlace; // поинт точка до которой двигается моб 
@@ -27,10 +29,13 @@ namespace bomberman
         Point[] path;// путь 
         int pathStep; // текущий шаг 
         static Random rand = new Random(); // рандомное значение для нового пути куда должен идти
-        public Mob(PictureBox picture, PictureBox[,] picM, Sost[,] _map) // конструктор 
+        Player player; // igrok 
+
+        public Mob(PictureBox picture, PictureBox[,] picM, Sost[,] _map, Player _player) // конструктор 
         {
             mob = picture;// картинка врага
             map = _map; // карта
+            player = _player;
             fmap = new int[map.GetLength(0), map.GetLength(1)]; // длина карты
             path = new Point[map.GetLength(0)* map.GetLength(1)]; //максимальный путь
             moving = new MovingClass(picture, picM, _map); // класс движение 
@@ -72,6 +77,9 @@ namespace bomberman
             moving.Move(sx*step, sy*step);
 
             MobPlace = moving.MyNowPoint();
+
+            if (level >= 2 && map[newPlace.X, newPlace.Y] == Sost.bomb || map[newPlace.X, newPlace.Y] == Sost.fire) //если уровень стал другой то мобы стали умнее
+                GetNewPlace(); // если бомба и огонь ищет новый путь. 
 
         }
 
@@ -139,6 +147,11 @@ namespace bomberman
         }
         private void GetNewPlace() // создание нового пути, маршрута, к
         {
+            if(level >= 3) // уровень 3 бежит к игроку 
+            {
+                destinePlace = player.MyNowPoint(); // если путь равен с игроком то возращаем этот путь 
+                if (FindPath()) return; 
+            }
             int loop = 0;
             do
             {   // рандомные значение куда должен идти враг 
@@ -150,6 +163,10 @@ namespace bomberman
         public Point MyNowPoint() // расспложение врага 
         {
             return moving.MyNowPoint(); 
+        }
+        public void SetLevel(int _level) // меняет уровень игрока
+        {
+            level = _level; 
         }
     }
 }

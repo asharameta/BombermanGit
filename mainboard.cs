@@ -22,23 +22,27 @@ namespace bomberman   // локация
         Sost[,] map;  // массив состояний карт 
         int sizeX = 17;     // ширина игрового поля 
         int sizeY = 11;     // высота игрового поля 
+        int sizeMob = 3;     // количество врагов 
         static Random rand = new Random(); // рандом для создание блоков которые можно будет рушить 
         Player player; // наш игрок
         List<Mob> mobs; // враг 
         deClear NeedClear; // делегат очистки огня
-         public MainBoard(Panel panel, deClear _clear) // конструктор 
+        int boxSize;
+        Label score; //статистика панелька 
+
+        public MainBoard(Panel panel, deClear _clear, Label _score) // конструктор 
         {
             NeedClear = _clear;  // очищение огня поосле бомбы
             panelGame = panel; // присвоение понели 
-            mobs = new List<Mob>(); 
-            int boxSize;
+            score = _score; // статистика 
+            mobs = new List<Mob>();           
             if ((panelGame.Width / sizeX) < (panelGame.Height / sizeY))  // узнаем размер бокса ( что чего больше по Х или У) и делим 
                 boxSize = panelGame.Width / sizeX;
             else
                 boxSize = panelGame.Height / sizeY;
             InitStartMap(boxSize+1);  //создание карты 
             InitStartPlayer(boxSize);  // создание игрока
-            for (int i = 0; i < 3; i++) // создание количество мобов 
+            for (int i = 0; i < sizeMob; i++) // создание количество мобов 
             {
                 InitMob(boxSize); //создание моба
             }
@@ -119,7 +123,7 @@ namespace bomberman   // локация
         private void InitStartPlayer(int boxSize)
         {
             int x = 1, y = 1;  // кординаты создание главного игрока
-            PictureBox picture = new PictureBox(); //кортинка главного игрока
+            PictureBox picture = new PictureBox(); //картинка главного игрока
             Bitmap picture1 = new Bitmap(Properties.Resources.player);
             picture.Location = new Point(x * (boxSize) + 7, y * (boxSize) + 3); // местоположение игрока  (по середине)
             picture.Size = new Size(boxSize - 14, boxSize - 6); // размер игрока               (можно редактировать)
@@ -129,7 +133,7 @@ namespace bomberman   // локация
             picture.SizeMode = PictureBoxSizeMode.StretchImage; // задний фон растянуло на всю клеточку 
             panelGame.Controls.Add(picture); // добавление картинку на контролс
             picture.BringToFront(); // выджвижение игрока на передний фон 
-            player = new Player(picture, mapPic, map);  // присвоили картинку игрока к игроку (классу) 
+            player = new Player(picture, mapPic, map, score);  // присвоили картинку игрока к игроку (классу) 
         }
 
         private void InitMob(int boxSize) // создание моба 
@@ -145,7 +149,7 @@ namespace bomberman   // локация
             picture.SizeMode = PictureBoxSizeMode.StretchImage; // задний фон растянуло на всю клеточку 
             panelGame.Controls.Add(picture); // добавление картинку на контролс
             picture.BringToFront(); // выджвижение mob на передний фон 
-            mobs.Add(new Mob(picture, mapPic, map)); // передача инфы мобу 
+            mobs.Add(new Mob(picture, mapPic, map, player)); // передача инфы мобу 
         }
         private void FindEmptyPlace(out int x, out int y) // ищет emptyе место для создание моба 
         {
@@ -159,7 +163,7 @@ namespace bomberman   // локация
 
         public void MovePlayer(Arrows arrow) // движение игрока
         {
-            if (player == null) return; // страховка, если игрока нету и нажали движение 
+            if (player == null) return; // страховка, если игрока нету и нажали движение      
             player.MovePlayer(arrow);// передаем движение игроку 
         }
 
@@ -271,16 +275,29 @@ namespace bomberman   // локация
                         ChangeSost(new Point(x, y), Sost.empty);
                 }
         }
-        public bool GameOver()
+        public bool GameOver() // игра закончилось 
         {
             Point myPoint = player.MyNowPoint();
-            if (map[myPoint.X, myPoint.Y] == Sost.fire) return true;
-            if (mobs.Count == 0) return true;
-            foreach (Mob mob in mobs)
+
+            if (map[myPoint.X, myPoint.Y] == Sost.fire) return true; // попал на огонь конец игре 
+            foreach (Mob mob in mobs) // если игрок попался на моба
             {
                 if (myPoint == mob.MyNowPoint()) return true;
             }
             return false;
+        }
+        public bool GameFinish() // игра закончилось 
+        {
+            if (mobs.Count == 0)
+                return true;  // закончились мобы конец игре 
+            return false;
+        }
+        public void SetMobLevel(int level)
+        {
+            foreach(Mob mob in mobs)
+            {
+                mob.SetLevel(level); 
+            }
         }
     }
 }
