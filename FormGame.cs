@@ -13,11 +13,13 @@ namespace bomberman
     public delegate void deClear(); // очистка 
     public partial class FormGame : Form
     {
+        System.Media.SoundPlayer player;
         MainBoard board;
         int level = 1; 
 
         public FormGame()
         {
+            player = new System.Media.SoundPlayer();
             InitializeComponent();
             NewGame(); // запуска игрового поля 
         }
@@ -59,25 +61,6 @@ namespace bomberman
         {
             MessageBox.Show("Anton Pashkevich, Aliaksei Sharameta \nStudents of the University of Lodz \n3rd year students, Computer graphics and Game Programming" +
                 "\nFor feedback: natoy7000@gmail.com", "About Authors"); 
-        }
-
-        private void panelgame_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void StripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-        private void infoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void FormGame_KeyDown(object sender, KeyEventArgs e) // при нажатие клавиатуры (форма, клавиша) 
@@ -165,19 +148,31 @@ namespace bomberman
 
 
         //смена сложности 
-        private void easyToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void easyToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             ChageLevel(1);
         }
 
-        private void normalToolStripMenuItem_Click(object sender, EventArgs e)
+        private void normalToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            ChageLevel(2); 
+            ChageLevel(2);
         }
 
-        private void hardToolStripMenuItem_Click(object sender, EventArgs e)
+        private void hardToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            ChageLevel(3); 
+            ChageLevel(3);
+        }
+
+        private void oNToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            player.SoundLocation = @"menu.wav";
+            player.Play();
+        }
+
+        private void oFFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            player.Stop();
         }
     }
 }
