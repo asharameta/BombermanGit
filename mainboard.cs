@@ -46,6 +46,7 @@ namespace bomberman   // локация
             {
                 InitMob(boxSize); //создание моба
             }
+            BonusClass.Prepare();
 
         }
 
@@ -251,6 +252,12 @@ namespace bomberman   // локация
                 case Sost.empty:
                     return true;
                 case Sost.wall:
+                    return false;
+                case Sost.brick:
+                    if(rand.Next(3)==0) // создание бонуса рандом из 3 чисел
+                        ChangeSost(new Point(place.X + sx, place.Y + sy), Sost.bonus);
+                    else
+                    ChangeSost(new Point(place.X + sx, place.Y + sy), Sost.fire);
                     return false;
                 case Sost.bomb:   // взрываем бомбы если они на пути бомбы 
                    foreach(Bomb bomb in player.bombs)

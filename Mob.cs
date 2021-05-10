@@ -38,7 +38,7 @@ namespace bomberman
             player = _player;
             fmap = new int[map.GetLength(0), map.GetLength(1)]; // длина карты
             path = new Point[map.GetLength(0)* map.GetLength(1)]; //максимальный путь
-            moving = new MovingClass(picture, picM, _map); // класс движение 
+            moving = new MovingClass(picture, picM, _map, AddBonus); // класс движение 
             MobPlace = moving.MyNowPoint(); // получаем поинты врага 
             destinePlace = MobPlace; // кардинаты движение моба , куда должен идти моб
             CreateTimer(); // запуск таймера для движение игрока 
@@ -168,5 +168,6 @@ namespace bomberman
         {
             level = _level; 
         }
+        private void AddBonus(Prize p) { }
     }
 }

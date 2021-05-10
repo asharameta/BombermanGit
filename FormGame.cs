@@ -174,5 +174,10 @@ namespace bomberman
         {
             player.Stop();
         }
+
+        private void labelScore_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

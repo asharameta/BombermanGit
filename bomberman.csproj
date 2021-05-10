@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bomb.cs" />
+    <Compile Include="BonusClass.cs" />
     <Compile Include="FormGame.cs">
       <SubType>Form</SubType>
     </Compile>

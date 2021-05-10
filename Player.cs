@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 namespace bomberman
 {
+    public delegate void deAddBonus(Prize p); 
     enum Arrows   //стрелки управление
     {
         left,
@@ -35,7 +36,7 @@ namespace bomberman
             leftFire = 3;
             score = lbScore;
             bombs = new List<Bomb>();
-            moving = new MovingClass(_player, _mapPic, _map); // создали движение игрока 
+            moving = new MovingClass(_player, _mapPic, _map, AddBonus); // создали движение игрока 
             ChageScore();
         }
 
@@ -44,16 +45,20 @@ namespace bomberman
             switch (arrow) // передвижение игрока (картинки его) спомощью функиця мув из класса МувингКласс
             {
                 case Arrows.left:
+                    player.Image = Properties.Resources.playerLeft; // смена картинки игрока бежит лево
                     moving.Move(-step, 0);
                     break;
                 case Arrows.right:
-                    moving.Move(step, 0);
+                    player.Image = Properties.Resources.playerRight;
+                   moving.Move(step, 0);
                     break;
                 case Arrows.up:
-                    moving.Move(0, -step);
+                    player.Image = Properties.Resources.playerUp;
+                   moving.Move(0, -step);
                     break;
                 case Arrows.down:
-                    moving.Move(0, step);
+                    player.Image = Properties.Resources.playerDown;
+                   moving.Move(0, step);
                     break;
                 default:
                     break;
@@ -66,19 +71,49 @@ namespace bomberman
         public bool PutBomb(PictureBox[,] mapPic, deBlow bb)// можно ли ставить бомбу или нет 
         {
             if (bombs.Count() >= NumOfBomb) return false; // нету бомб
+
             Bomb bomb = new Bomb(mapPic, MyNowPoint(), bb); // создание бомбы 
-            bombs.Add(bomb); // добаваление бомбы 
+            player.Image = Properties.Resources.player;
+           bombs.Add(bomb); // добаваление бомбы 
             return true;
         }
         public void RemoveBomb(Bomb bomb) // удаление бомб 
         {
             bombs.Remove(bomb);
         }
-        private void ChageScore() //статистика (на панели) 
+        private void ChageScore(string bonus="") //статистика (на панели) 
         {
             if (score == null) return;
-            score.Text = "Speed: " + step + ", fire: " + leftFire; 
+            score.Text = "Speed: " + step + ", fire: " + leftFire +"Action bonus: " + bonus; 
         }
 
+        private void AddBonus(Prize prize) // добавление бонусов 
+        {
+            switch (prize)
+            {
+                case Prize.empty:
+                   // leftFire++; 
+                    break;
+                case Prize.firePlus:
+                    leftFire++;
+                    ChageScore(" +1 fire");
+                    break;
+                case Prize.fireMinus:
+                    leftFire = leftFire == 1 ? 1 : leftFire--;
+                    ChageScore (" -1 fire");
+                    break;
+                case Prize.speedPlus:
+                    step ++;
+                    ChageScore(" +1 speed");
+                    break;
+                case Prize.speedMinus:
+                    step = step <= 3 ? 3 : step --;
+                    ChageScore(" -1 speed");
+                    break;
+                default:
+                    break;
+            }
+          
+        }
     }
 }
