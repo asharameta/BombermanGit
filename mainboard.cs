@@ -13,6 +13,7 @@ namespace bomberman   // локация
         brick,
         bomb,
         fire,
+        door, 
         bonus
     }
     class MainBoard
@@ -30,11 +31,12 @@ namespace bomberman   // локация
         int boxSize;
         Label score; //статистика панелька 
 
-        public MainBoard(Panel panel, deClear _clear, Label _score) // конструктор 
+        public MainBoard(Panel panel, deClear _clear, Label _score, int _mobs) // конструктор 
         {
             NeedClear = _clear;  // очищение огня поосле бомбы
             panelGame = panel; // присвоение понели 
             score = _score; // статистика 
+            sizeMob = _mobs; 
             mobs = new List<Mob>();           
             if ((panelGame.Width / sizeX) < (panelGame.Height / sizeY))  // узнаем размер бокса ( что чего больше по Х или У) и делим 
                 boxSize = panelGame.Width / sizeX;
@@ -114,6 +116,9 @@ namespace bomberman   // локация
                 case Sost.bonus:
                         mapPic[point.X, point.Y].Image = Properties.Resources.prize;  
                     break;
+                case Sost.door:
+                    mapPic[point.X, point.Y].Image = Properties.Resources.door;
+                    break;
                 default:
                     mapPic[point.X, point.Y].Image = Properties.Resources.grass;
                     break;
@@ -172,6 +177,7 @@ namespace bomberman   // локация
         {
             Point playerPoint = player.MyNowPoint(); // расположение игрока
             if (map[playerPoint.X, playerPoint.Y] == Sost.bomb) return; // нельзя ставить 2 бомбы на одном месте 
+            if (map[playerPoint.X, playerPoint.Y] == Sost.door) return;
             if (player.PutBomb(mapPic, deBlow)) // проверка можно ли бомбу ставить 
                 ChangeSost(player.MyNowPoint(), Sost.bomb); // установка самой бомбы на позиций игрока 
         }
@@ -253,6 +259,8 @@ namespace bomberman   // локация
                     return true;
                 case Sost.wall:
                     return false;
+                case Sost.door:
+                    return false;
                 case Sost.brick:
                     if(rand.Next(3)==0) // создание бонуса рандом из 3 чисел
                         ChangeSost(new Point(place.X + sx, place.Y + sy), Sost.bonus);
@@ -299,12 +307,28 @@ namespace bomberman   // локация
                 return true;  // закончились мобы конец игре 
             return false;
         }
-        public void SetMobLevel(int level)
+        public void SetMobLevel(int level) // установка уровня 
         {
             foreach(Mob mob in mobs)
             {
                 mob.SetLevel(level); 
             }
         }
+
+        public void NextLevel() // создание двери
+        {
+            int x = rand.Next(3, sizeX - 1);
+            int y = rand.Next(3, sizeY - 1);
+            ChangeSost(new Point(x, y), Sost.door); 
+        }
+        public bool NextGame() // дошли до двери 
+        {
+            Point myPoint = player.MyNowPoint();
+            if (map[myPoint.X, myPoint.Y] == Sost.door)
+                return true; 
+            return false;
+        }
+
+
     }
 }

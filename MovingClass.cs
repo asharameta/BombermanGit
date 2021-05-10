@@ -64,7 +64,8 @@ namespace bomberman
 
             if (sx > 0 && (map[playerPoint.X + 1, playerPoint.Y] == Sost.empty ||
                            map[playerPoint.X + 1, playerPoint.Y] == Sost.fire  ||
-                           map[playerPoint.X + 1, playerPoint.Y] == Sost.bonus))
+                           map[playerPoint.X + 1, playerPoint.Y] == Sost.bonus ||
+                            map[playerPoint.X + 1, playerPoint.Y] == Sost.door))
             {
                 if (playerUp < rightUpWallDown)
                     if (rightUpWallDown - playerUp > offset)
@@ -80,7 +81,8 @@ namespace bomberman
             }
             if (sx < 0 && (map[playerPoint.X - 1, playerPoint.Y] == Sost.empty||
                            map[playerPoint.X - 1, playerPoint.Y] == Sost.fire ||
-                           map[playerPoint.X - 1, playerPoint.Y] == Sost.bonus))
+                           map[playerPoint.X - 1, playerPoint.Y] == Sost.bonus||
+                           map[playerPoint.X - 1, playerPoint.Y] == Sost.door))
             {
                 if (playerUp < leftUpWallDown)
                     if (leftUpWallDown - playerUp > offset)
@@ -96,7 +98,8 @@ namespace bomberman
             }
             if (sy > 0 && (map[playerPoint.X, playerPoint.Y + 1] == Sost.empty||
                            map[playerPoint.X, playerPoint.Y + 1] == Sost.fire ||
-                           map[playerPoint.X, playerPoint.Y + 1] == Sost.bonus))
+                           map[playerPoint.X, playerPoint.Y + 1] == Sost.bonus||
+                           map[playerPoint.X, playerPoint.Y + 1] == Sost.door))
             {
                 if (playerRight > rightDownWallLeft)
                     if (rightDownWallLeft - playerRight < -offset)
@@ -112,7 +115,8 @@ namespace bomberman
             }
             if (sy < 0 && (map[playerPoint.X, playerPoint.Y - 1] == Sost.empty||
                            map[playerPoint.X, playerPoint.Y - 1] == Sost.fire ||
-                           map[playerPoint.X, playerPoint.Y - 1] == Sost.bonus))
+                           map[playerPoint.X, playerPoint.Y - 1] == Sost.bonus||
+                            map[playerPoint.X, playerPoint.Y - 1] == Sost.door))
             {
                 if (playerRight > rightUpWallLeft)
                     if (rightUpWallLeft - playerRight < -offset)

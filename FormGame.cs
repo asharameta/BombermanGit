@@ -15,7 +15,8 @@ namespace bomberman
     {
         System.Media.SoundPlayer player;
         MainBoard board;
-        int level = 1; 
+        int level = 0; // уровень сложности
+        int mobs = 0; // количество мобов 
 
         public FormGame()
         {
@@ -23,12 +24,15 @@ namespace bomberman
             InitializeComponent();
             NewGame(); // запуска игрового поля 
         }
-        private void NewGame()
+        private void NewGame() // запуск игры
         {
-            board = new MainBoard(panelGame, StartClear, labelScore);  //создание карты панели 
+            level++;
+            mobs++; 
+            board = new MainBoard(panelGame, StartClear, labelScore,mobs);  //создание карты панели 
             ChageLevel(level); // меняет уровень;
             GameOverTimer.Enabled = true; // вкл таймера проигрыша
             timer1.Enabled = true;  // вкл таймера выйгреша
+            timer2.Enabled = true;
         }
 
         private void formgame_Load(object sender, EventArgs e)
@@ -114,17 +118,25 @@ namespace bomberman
             }
 
         }
-        private void timer1_Tick(object sender, EventArgs e) // выиграли 
-        {
+        private void timer1_Tick(object sender, EventArgs e) // выиграли  убили всех врагов 
+        { 
             if (board.GameFinish())
             {
                 timer1.Enabled = false;
-                DialogResult dr = MessageBox.Show("You finish", "Game Finish!", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                board.NextLevel(); 
+            }
+
+        }
+        private void timer2_Tick(object sender, EventArgs e) // дошли до двери 
+        {
+            if (board.NextGame())
+            {
+                timer2.Enabled = false;
+                DialogResult dr = MessageBox.Show("NEXT LEVEL", "Game Finish!", MessageBoxButtons.OK, MessageBoxIcon.Question);
                 if (dr == System.Windows.Forms.DialogResult.OK)
                 {
-                    this.Close();
+                    NewGame();
                 }
-
             }
         }
 
