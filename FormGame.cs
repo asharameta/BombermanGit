@@ -15,9 +15,8 @@ namespace bomberman
     {
         System.Media.SoundPlayer player;
         MainBoard board;
-        int level = 0; // уровень сложности
-        int mobs = 0; // количество мобов 
-
+        int level = 1; // уровень сложности
+        int mobs = 1; // количество мобов 
         public FormGame()
         {
             player = new System.Media.SoundPlayer();
@@ -26,19 +25,23 @@ namespace bomberman
         }
         private void NewGame() // запуск игры
         {
-            level++;
-            mobs++; 
             board = new MainBoard(panelGame, StartClear, labelScore,mobs);  //создание карты панели 
             ChageLevel(level); // меняет уровень;
             GameOverTimer.Enabled = true; // вкл таймера проигрыша
             timer1.Enabled = true;  // вкл таймера выйгреша
             timer2.Enabled = true;
         }
-
-        private void formgame_Load(object sender, EventArgs e)
+        private void NewNextLevel() // запуск игры
         {
-
+            mobs++;
+            level++;
+            board = new MainBoard(panelGame, StartClear, labelScore, mobs);  //создание карты панели 
+            ChageLevel(level); // меняет уровень;
+            GameOverTimer.Enabled = true; // вкл таймера проигрыша
+            timer1.Enabled = true;  // вкл таймера выйгреша
+            timer2.Enabled = true;
         }
+
         //обИгреToolStripMenuItem_Click
         private void AboutGameToolStripMenuItem_Click(object sender, EventArgs e) //описание меню игры 
         {
@@ -106,15 +109,15 @@ namespace bomberman
             if(board.GameOver()) // игра закончилось  
             {
                 GameOverTimer.Enabled = false;
-                DialogResult dr = MessageBox.Show("You died!\nDo you want to play again?", "Game Over!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dr==System.Windows.Forms.DialogResult.Yes)
-                {
-                    NewGame(); 
-                }
-                else
-                {
-                    this.Close();//Это я от себя добавил если нажать No то закроется окно, а можно по его способу просто обездвижить игрока.
-                }
+                    DialogResult dr = MessageBox.Show("You died!\nDo you want to play again?", "Game Over!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        NewGame();
+                    }
+                    else
+                    {
+                        this.Close();//Это я от себя добавил если нажать No то закроется окно, а можно по его способу просто обездвижить игрока.
+                    }
             }
 
         }
@@ -129,15 +132,19 @@ namespace bomberman
         }
         private void timer2_Tick(object sender, EventArgs e) // дошли до двери 
         {
-            if (board.NextGame())
-            {
-                timer2.Enabled = false;
-                DialogResult dr = MessageBox.Show("NEXT LEVEL", "Game Finish!", MessageBoxButtons.OK, MessageBoxIcon.Question);
-                if (dr == System.Windows.Forms.DialogResult.OK)
+                if (board.NextGame())
                 {
-                    NewGame();
+                    timer2.Enabled = false;
+                    DialogResult dr = MessageBox.Show("Do you want to play next level?", "U WON!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        NewNextLevel();
+                    }
+                    else
+                    {
+                        this.Close();
+                    }
                 }
-            }
         }
 
 

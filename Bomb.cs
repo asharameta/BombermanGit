@@ -12,10 +12,12 @@ namespace bomberman
         Timer timer;  // таймер бомбы 
         int NumberOfSec = 4; //таймер бомбы, время взрыва 
         PictureBox[,] mapPic; // картинки цифр 
-       public Point bombPlace { get; private set;  } // разположение бомбы .  (получаем место положение бомбы из других функций, но изменять не можем) 
+        System.Media.SoundPlayer blowsound;
+        public Point bombPlace { get; private set;  } // разположение бомбы .  (получаем место положение бомбы из других функций, но изменять не можем) 
         deBlow baBah; // взрыв 
         public Bomb(PictureBox[,]_mapPic, Point _bombPlace, deBlow bb)
         {
+            blowsound = new System.Media.SoundPlayer();
             mapPic = _mapPic; // картинки цифр 
             bombPlace = _bombPlace;// распложение бомб от игрока
             baBah = bb;  //взрыв ссылка на метод 
@@ -34,6 +36,8 @@ namespace bomberman
             if(NumberOfSec <= 0) // кончилось время бомбы 
             {
                 timer.Enabled = false; // выключаем таймер 
+                blowsound.SoundLocation = @"bomb.wav";
+                blowsound.Play();
                 baBah(this); // взрыв 
                 return; 
             }

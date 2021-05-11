@@ -8,9 +8,11 @@ namespace bomberman
         PictureBox player; //игрок (картинка)
         PictureBox[,] mapPic; // карта
         Sost[,] map; // состояние карта 
-        deAddBonus addBonus; 
+        deAddBonus addBonus;
+        System.Media.SoundPlayer sounds;
         public MovingClass(PictureBox item, PictureBox[,] _mapPic, Sost[,] _map, deAddBonus methodBonus) // конструктор. передаем параметры 
         {
+            sounds = new System.Media.SoundPlayer();
             player = item;
             mapPic = _mapPic;
             map = _map;
@@ -26,7 +28,9 @@ namespace bomberman
                 {
                     addBonus(BonusClass.GetBonus()); 
                     map[myPlace.X, myPlace.Y] = Sost.empty;
-                    mapPic[myPlace.X, myPlace.Y].Image = Properties.Resources.grass; 
+                    mapPic[myPlace.X, myPlace.Y].Image = Properties.Resources.grass;
+                    sounds.SoundLocation = @"take.wav";
+                    sounds.Play();
                 }
             }
         }

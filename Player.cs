@@ -84,7 +84,7 @@ namespace bomberman
         private void ChageScore(string bonus="") //статистика (на панели) 
         {
             if (score == null) return;
-            score.Text = "Speed: " + step + ", fire: " + leftFire +" Action bonus: " + bonus; 
+            score.Text = "Speed: " + step + ", fire: " + leftFire +", Action bonus: " + bonus; 
         }
 
         private void AddBonus(Prize prize) // добавление бонусов 

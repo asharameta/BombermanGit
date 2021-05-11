@@ -14,6 +14,7 @@ namespace bomberman   // локация
         bomb,
         fire,
         door, 
+        door2,
         bonus
     }
     class MainBoard
@@ -30,9 +31,10 @@ namespace bomberman   // локация
         deClear NeedClear; // делегат очистки огня
         int boxSize;
         Label score; //статистика панелька 
-
+        System.Media.SoundPlayer sounds;
         public MainBoard(Panel panel, deClear _clear, Label _score, int _mobs) // конструктор 
         {
+            sounds = new System.Media.SoundPlayer();
             NeedClear = _clear;  // очищение огня поосле бомбы
             panelGame = panel; // присвоение понели 
             score = _score; // статистика 
@@ -117,7 +119,7 @@ namespace bomberman   // локация
                         mapPic[point.X, point.Y].Image = Properties.Resources.prize;  
                     break;
                 case Sost.door:
-                    mapPic[point.X, point.Y].Image = Properties.Resources.door;
+                    mapPic[point.X, point.Y].Image = Properties.Resources.door2;
                     break;
                 default:
                     mapPic[point.X, point.Y].Image = Properties.Resources.grass;
@@ -179,7 +181,11 @@ namespace bomberman   // локация
             if (map[playerPoint.X, playerPoint.Y] == Sost.bomb) return; // нельзя ставить 2 бомбы на одном месте 
             if (map[playerPoint.X, playerPoint.Y] == Sost.door) return;
             if (player.PutBomb(mapPic, deBlow)) // проверка можно ли бомбу ставить 
+            {
                 ChangeSost(player.MyNowPoint(), Sost.bomb); // установка самой бомбы на позиций игрока 
+                sounds.SoundLocation = @"put.wav";
+                sounds.Play();
+            }    
         }
 
         private void deBlow(Bomb bomb) // взрыв бомбы
@@ -294,17 +300,31 @@ namespace bomberman   // локация
         {
             Point myPoint = player.MyNowPoint();
 
-            if (map[myPoint.X, myPoint.Y] == Sost.fire) return true; // попал на огонь конец игре 
+            if (map[myPoint.X, myPoint.Y] == Sost.fire)// попал на огонь конец игре
+            {
+                sounds.SoundLocation = @"lost.wav";
+                sounds.Play();
+                return true;
+            } 
             foreach (Mob mob in mobs) // если игрок попался на моба
             {
-                if (myPoint == mob.MyNowPoint()) return true;
+                if (myPoint == mob.MyNowPoint())
+                {
+                    sounds.SoundLocation = @"win2.wav";
+                    sounds.Play();
+                    return true;
+                }
             }
             return false;
         }
         public bool GameFinish() // игра закончилось 
         {
-            if (mobs.Count == 0)
-                return true;  // закончились мобы конец игре 
+            if (mobs.Count == 0)// закончились мобы конец игре 
+            {
+                sounds.SoundLocation = @"win.wav";
+                sounds.Play();
+                return true;
+            }
             return false;
         }
         public void SetMobLevel(int level) // установка уровня 

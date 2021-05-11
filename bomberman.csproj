@@ -86,7 +86,6 @@
     <Compile Include="FormGame.Designer.cs">
       <DependentUpon>FormGame.cs</DependentUpon>
     </Compile>
-    <Compile Include="Liset.cs" />
     <Compile Include="MainBoard.cs" />
     <Compile Include="Mob.cs" />
     <Compile Include="MovingClass.cs" />
@@ -122,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icons-Land-Multiple-Smiley-Bomb-Cool.ico" />
+    <None Include="sprite\door2.png" />
     <None Include="sprite\door.png" />
     <None Include="sprite\backcolor.png" />
     <None Include="sprite\prize.png" />
