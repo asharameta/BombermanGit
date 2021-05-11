@@ -302,7 +302,7 @@ namespace bomberman   // локация
 
             if (map[myPoint.X, myPoint.Y] == Sost.fire)// попал на огонь конец игре
             {
-                sounds.SoundLocation = @"lost.wav";
+                sounds.SoundLocation = @"you_lose.wav";
                 sounds.Play();
                 return true;
             } 
@@ -310,7 +310,7 @@ namespace bomberman   // локация
             {
                 if (myPoint == mob.MyNowPoint())
                 {
-                    sounds.SoundLocation = @"win2.wav";
+                    sounds.SoundLocation = @"loser.wav";
                     sounds.Play();
                     return true;
                 }
@@ -321,7 +321,7 @@ namespace bomberman   // локация
         {
             if (mobs.Count == 0)// закончились мобы конец игре 
             {
-                sounds.SoundLocation = @"win.wav";
+                sounds.SoundLocation = @"you_win.wav";
                 sounds.Play();
                 return true;
             }
